@@ -1,4 +1,9 @@
 /* style.css */
+@keyframes flash {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -51,8 +56,4 @@ h1 {
 
 a {
   color: #33ffdd;
-}
-@keyframes flash {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
 }
