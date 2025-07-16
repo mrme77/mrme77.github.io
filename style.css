@@ -41,7 +41,7 @@ nav ul li a:hover {
 
 .tab.active {
   display: block;
-  animation: flash 1s step-start infinite;
+  
 }
 
 
