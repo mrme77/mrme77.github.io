@@ -10,14 +10,15 @@
 <body>
   <div class="overlay">
     <nav>
-      <ul>
-        <li><a href="#" onclick="showTab('bio')">Bio</a></li>
-        <li><a href="#" onclick="showTab('linkedin')">LinkedIn</a></li>
-        <li><a href="#" onclick="showTab('articles')">Articles</a></li>
-        <li><a href="#" onclick="showTab('github')">GitHub</a></li>
-        <li><a href="#" onclick="showTab('projects')">Projects</a></li>
+     <ul>
+      <li><a href="#" onclick="showTab('bio')"><span class="cursor" id="cursor-bio">></span>Bio</a></li>
+      <li><a href="#" onclick="showTab('linkedin')"><span class="cursor" id="cursor-linkedin" style="display:none">></span>LinkedIn</a></li>
+      <li><a href="#" onclick="showTab('articles')"><span class="cursor" id="cursor-articles" style="display:none">></span>Articles</a></li>
+      <li><a href="#" onclick="showTab('github')"><span class="cursor" id="cursor-github" style="display:none">></span>GitHub</a></li>
+      <li><a href="#" onclick="showTab('projects')"><span class="cursor" id="cursor-projects" style="display:none">></span>Projects</a></li>
       </ul>
-    </nav>
+</nav>
+
 
     <main>
       <section id="bio" class="tab active">
