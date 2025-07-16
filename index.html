@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Night View GitHub Page</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="overlay">
+    <nav>
+      <ul>
+        <li><a href="#" onclick="showTab('bio')">Bio</a></li>
+        <li><a href="#" onclick="showTab('linkedin')">LinkedIn</a></li>
+        <li><a href="#" onclick="showTab('articles')">Articles</a></li>
+        <li><a href="#" onclick="showTab('github')">GitHub</a></li>
+        <li><a href="#" onclick="showTab('projects')">Projects</a></li>
+      </ul>
+    </nav>
+
+    <main>
+      <section id="bio" class="tab active">
+        <h1>Bio</h1>
+        <p>Hello! I’m a tech enthusiast who enjoys data, automation, and creating cool stuff. This is my minimalist night-themed page.</p>
+      </section>
+
+      <section id="linkedin" class="tab">
+        <h1>LinkedIn</h1>
+        <p><a href="https://www.linkedin.com/in/yourusername/" target="_blank">Visit my LinkedIn profile</a></p>
+      </section>
+
+      <section id="articles" class="tab">
+        <h1>Articles</h1>
+        <ul>
+          <li><a href="#">How Regex Saved My Morning</a></li>
+          <li><a href="#">LLMs Are Not Always the Answer</a></li>
+          <li><a href="#">The Culture of Shortcuts</a></li>
+        </ul>
+      </section>
+
+      <section id="github" class="tab">
+        <h1>GitHub</h1>
+        <p><a href="https://github.com/yourusername" target="_blank">My GitHub Repos</a></p>
+      </section>
+
+      <section id="projects" class="tab">
+        <h1>Projects</h1>
+        <ul>
+          <li><strong>AutoSort Photos:</strong> A Python script to organize images by year.</li>
+          <li><strong>Streamlit Resume Viewer:</strong> Interactive CV using Python + Streamlit.</li>
+        </ul>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
