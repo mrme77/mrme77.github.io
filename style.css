@@ -39,7 +39,9 @@ nav ul li a:hover {
 
 .tab.active {
   display: block;
+  animation: flash 1s step-start infinite;
 }
+
 
 h1 {
   border-bottom: 1px solid #33ff33;
