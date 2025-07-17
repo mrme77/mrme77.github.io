@@ -1,6 +1,5 @@
 /* style.css */
 
-
 body {
   margin: 0;
   padding: 0;
@@ -41,15 +40,14 @@ nav ul li a:hover {
 
 .tab.active {
   display: block;
-  
 }
-
 
 h1 {
   border-bottom: 1px solid #33ff33;
   padding-bottom: 0.5rem;
   margin-bottom: 1rem;
 }
+
 .cursor {
   display: inline-block;
   margin-left: 0.4em;
@@ -63,38 +61,53 @@ h1 {
   50% { opacity: 0; }
 }
 
-
 a {
   color: #33ffdd;
 }
+
+/* BANNER SECTION */
+
 .banner-container {
   position: relative;
-  width: 100%;
-  margin-bottom: 20px;
+  width: 100vw;       /* Full viewport width */
+  margin: 0 auto 20px auto;
+  overflow: hidden;
 }
-#bio .banner-image {
-  /* Your custom styles for the bio banner */
-  height: 350px; /* Example: different height */
-  border-radius: 16px; /* Example: more rounded corners */
-  filter: grayscale(20%); /* Example: slight grayscale effect */
+
+
+
+.banner-image {
+  display: block;
+  width: 100vw;       /* Force full width */
+  max-width: 100%;
+  height: 350px;       /* Consistent height */
+  object-fit: cover;   /* Fill and crop to fit container */
+  border-radius: 0;    /* Set to 0 if you want edge-to-edge banners */
+  background-color: #111;
 }
 .banner-image {
+  display: block;
   width: 100%;
-  height: 250px; /* Adjust this height as needed for your banner */
-  object-fit: cover; /* This will crop the image to fill the space */
-  border-radius: 8px; /* Optional: rounded corners */
+  height: auto;
+  aspect-ratio: 4 / 1;
+  object-fit: fill; /* Use 'contain' instead of 'cover' if you want to avoid cropping */
+  background-color: #000;
 }
-/* Option 1: Text overlay on the banner */
+
+/* Text overlay */
 .banner-content {
   position: absolute;
-  bottom: -100px;
-  left: 0px;
-  color: #33ffdd; /* Make text visible on image */
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); /* Improves readability */
+  bottom: 20px;
+  left: 40px;
+  color: #33ffdd;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
 }
-#github p {
-  text-align: justify;
-}
+
+/* Paragraph alignment */
+#bio p,
+#articles p,
+#projects p,
+#github p,
 #linkedin p {
   text-align: justify;
 }
