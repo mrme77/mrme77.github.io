@@ -69,7 +69,7 @@ a {
 
 .banner-container {
   position: relative;
-  width: 100vw;       /* Full viewport width */
+  width: 100%;       /* Full viewport width */
   margin: 0 auto 20px auto;
   overflow: hidden;
 }
@@ -78,7 +78,7 @@ a {
 
 .banner-image {
   display: block;
-  width: 100vw;       /* Force full width */
+  width: 100%;       /* Force full width */
   max-width: 100%;
   height: 350px;       /* Consistent height */
   object-fit: cover;   /* Fill and crop to fit container */
