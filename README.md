@@ -1,6 +1,6 @@
-# Pasquale Salomone Personal Portfolio
+# Personal Portfolio
 
-This is a personal portfolio website for Pasquale Salomone, a Data Scientist passionate about solving real-world problems with technology, AI, and data science. The site is built with HTML and CSS and showcases professional experience, articles, projects, and social profiles.
+This is a personal portfolio website for a Data Scientist passionate about solving real-world problems with technology, AI, and data science. The site is built with HTML, CSS, and JavaScript, and showcases professional experience, articles, projects, and social profiles.
 
 ## Features
 
@@ -10,11 +10,13 @@ This is a personal portfolio website for Pasquale Salomone, a Data Scientist pas
 - **Justified Text:** All section content is neatly aligned for readability.
 - **External Links:** Direct access to LinkedIn, GitHub, and published articles.
 - **Project Highlights:** Descriptions and links to featured data science and AI projects.
+- **Dynamic Tab Switching:** Powered by `script.js`, clicking navigation items shows the relevant section and highlights the active tab.
 
 ## Structure
 
 - `index.html` — Main HTML file containing all sections and navigation.
 - `style.css` — Custom styles for layout, banners, and typography.
+- `script.js` — Handles tab switching and cursor highlighting for navigation.
 - `assets/` — Folder containing banner images for each section.
 
 ## How to Use
@@ -28,7 +30,8 @@ This is a personal portfolio website for Pasquale Salomone, a Data Scientist pas
 - Replace images in the `assets/` folder to update banners.
 - Edit section content in `index.html` to reflect your own experience or projects.
 - Adjust styles in `style.css` for further personalization.
+- Modify `script.js` to change tab behavior or add new interactive features.
 
 ## Credits
 
-Created
+Created by Pasquale Salomone.
