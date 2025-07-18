@@ -21,6 +21,10 @@
     .tab {
       padding: 1rem;
       box-sizing: border-box;
+      display: none;
+    }
+    .tab.active {
+      display: block;
     }
     .tab p {
       text-align: justify;
@@ -31,31 +35,11 @@
   <div class="overlay">
     <nav>
       <ul>
-        <li>
-          <a href="#" onclick="showTab('bio')">
-            Bio <span class="cursor" id="cursor-bio">></span>
-          </a>
-        </li>
-        <li>
-          <a href="#" onclick="showTab('linkedin')">
-            LinkedIn <span class="cursor" id="cursor-linkedin" style="display:none">></span>
-          </a>
-        </li>
-        <li>
-          <a href="#" onclick="showTab('articles')">
-            Articles <span class="cursor" id="cursor-articles" style="display:none">></span>
-          </a>
-        </li>
-        <li>
-          <a href="#" onclick="showTab('github')">
-            GitHub <span class="cursor" id="cursor-github" style="display:none">></span>
-          </a>
-        </li>
-        <li>
-          <a href="#" onclick="showTab('projects')">
-            Projects <span class="cursor" id="cursor-projects" style="display:none">></span>
-          </a>
-        </li>
+        <li><a href="#" onclick="showTab('bio')">Bio <span class="cursor" id="cursor-bio">></span></a></li>
+        <li><a href="#" onclick="showTab('linkedin')">LinkedIn <span class="cursor" id="cursor-linkedin" style="display:none">></span></a></li>
+        <li><a href="#" onclick="showTab('articles')">Articles <span class="cursor" id="cursor-articles" style="display:none">></span></a></li>
+        <li><a href="#" onclick="showTab('github')">GitHub <span class="cursor" id="cursor-github" style="display:none">></span></a></li>
+        <li><a href="#" onclick="showTab('projects')">Projects <span class="cursor" id="cursor-projects" style="display:none">></span></a></li>
       </ul>
     </nav>
 
@@ -65,7 +49,7 @@
           <img src="assets/bioimage.jpg" alt="Bio Banner" class="banner-image" />
           <h1>Bio</h1>
           <p>
-            Hi, I’m <strong>Pasquale Salomone</strong>—a Data Scientist with a passion for solving real problems through smart, efficient use of technology. I’m driven by curiosity, creativity, and a love for learning, whether it’s mastering the latest in AI or just figuring out how a few lines of regex can save hours of work 😎.
+            Ciao! I’m <strong>Pasquale Salomone</strong> — a Data Scientist with a passion for solving real problems through smart, efficient use of technology. I’m driven by curiosity, creativity, and a love for learning, whether it’s mastering the latest in AI or just figuring out how a few lines of regex can save hours of work 😎.
           </p>
           <p>
             My journey into data science started back in 2013 while working as a contractor for the U.S. Army in Germany. Before that, I served as an officer in the Italian Air Force, an experience that shaped my approach to strategy, discipline, and teamwork.
@@ -79,20 +63,9 @@
         </div>
       </section>
 
-      <section id="articles" class="tab">
-        <h1>Articles</h1>
-        <ul>
-          <li>
-            <a href="https://medium.com/@psalomone33/why-i-traded-my-pajamas-for-a-commute-sometimes-75181f532ec6" target="_blank" rel="noopener">
-              Why I Traded My Pajamas for a Commute (Sometimes)
-            </a>
-          </li>
-        </ul>
-      </section>
-
       <section id="linkedin" class="tab">
         <div class="banner-container">
-          <img src="assets/linkpro copy.jpg" alt="LinkedIn Banner" class="banner-image" /> 
+          <img src="assets/linkpro copy.jpg" alt="LinkedIn Banner" class="banner-image" />
           <h1>LinkedIn</h1>
           <p>
             Welcome to my LinkedIn! 🌐 I value LinkedIn as an incredible platform for networking and staying up to date with current industry trends. Whether it's connecting with like-minded professionals, sharing insights, or learning from thought leaders, LinkedIn allows me to grow my network and stay informed about the latest developments in the field. 📈
@@ -105,6 +78,32 @@
               Visit my LinkedIn profile
             </a>
           </p>
+        </div>
+      </section>
+
+      <section id="articles" class="tab">
+        <div class="banner-container">
+          <img src="assets/articles.png" alt="Articles Banner" class="banner-image" />
+          <h1>Articles</h1>
+          <ul>
+            <li>
+              <a href="https://medium.com/@psalomone33/why-i-traded-my-pajamas-for-a-commute-sometimes-75181f532ec6" target="_blank" rel="noopener">
+                Why I Traded My Pajamas for a Commute (Sometimes)
+              </a>
+            </li>
+            <br>
+            <li>
+              <a href="https://medium.com/p/9770d6886539" target="_blank" rel="noopener">
+                Draft Like a Data Wizard: How Recommender Systems Can Dominate Your Fantasy Basketball League
+              </a>
+            </li>
+            <br>
+            <li>
+              <a href="https://medium.com/p/3f8e7bc5c598" target="_blank" rel="noopener">
+                Could You Be Next? What Leads to School Dropouts
+              </a>
+            </li>
+          </ul>
         </div>
       </section>
 
@@ -130,19 +129,31 @@
         <div class="banner-container">
           <img src="assets/projects.png" alt="Projects Banner" class="banner-image" />
           <h1>Projects</h1>
-          <ul>
+          
+<p>
+  When I have a bit of breathing room, I like to build things — sometimes to learn something new, other times to revisit old ideas with fresh eyes. Lately, I’ve been digging into tools like Google Vertex AI and Hugging Face to get a deeper feel for what they can actually do in real-world scenarios.
+</p>
+<p>
+  One project I’ve been thinking about is training a neural network to predict presidential executive orders—part historical deep dive, part machine learning challenge. I'm also experimenting with running a local LLM at home through the Ollama interface, mostly to cut out token limits and fees, but also because I like having full control and privacy.
+These kinds of projects keep me sharp, curious, and connected to the fast-moving world of AI and Data Science.
+</p>
+<p>
+  Here are some of my recent projects that showcase my skills and interests in data science and AI:
+</p>
+
+            <ul>
             <li>
               <a href="https://huggingface.co/spaces/mrme77/PDF-To-Social-Media-Post-Generator" target="_blank" rel="noopener">
                 <strong>PDF To Social Media Post Generator</strong>
               </a>
             </li>
-            <li>
-              <strong>Student Dropout Analysis:</strong> Exploratory data analysis on student dropout causes using synthetic school data.
-            </li>
-            <li>
-              <strong>LLM Utility Tracker:</strong> Decide when regex is enough — and when it’s time to bring in the AI big guns.
-            </li>
+            <br>
+            
+            
           </ul>
+          <p>
+              <strong>More projects coming soon!</strong> Stay tuned for updates.
+            </p>
         </div>
       </section>
     </main>
