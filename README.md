@@ -34,6 +34,7 @@ This is a personal portfolio website for a Data Scientist passionate about solvi
 
 ## Credits
 
-Created by Pasquale Salomone.
-<br>
-Inspired by @ericmjl
+<p>
+  Created by Pasquale Salomone.<br>
+  Inspired by <a href="https://github.com/ericmjl" target="_blank" rel="noopener">@ericmjl</a>
+</p>
