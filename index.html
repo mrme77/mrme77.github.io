@@ -32,6 +32,18 @@
     }
   </style>
 </head>
+<!-- Chatbot Button -->
+<div id="chatbot-icon" onclick="toggleChat()">
+  💬
+</div>
+
+<!-- Chatbot Window -->
+<div id="chatbot-window">
+  <div id="chatbox"></div>
+  <input type="text" id="chat-input" placeholder="Type a message...">
+  <button onclick="sendChat()">Send</button>
+</div>
+
 <body>
   <div class="overlay">
     <nav>
@@ -43,6 +55,12 @@
         <li><a href="#" onclick="showTab('projects')">Projects <span class="cursor" id="cursor-projects" style="display:none">></span></a></li>
       </ul>
     </nav>
+    <div id="world-clocks">
+  <div><strong>PT:</strong> <span id="clock-pt"></span></div>
+  <div><strong>CT:</strong> <span id="clock-ct"></span></div>
+  <div><strong>ET:</strong> <span id="clock-et"></span></div>
+  <div><strong>Rome:</strong> <span id="clock-rome"></span></div>
+</div>
 
     <main>
       <section id="bio" class="tab active">

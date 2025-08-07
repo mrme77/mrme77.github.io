@@ -111,3 +111,78 @@ a {
 #linkedin p {
   text-align: justify;
 }
+#chatbot-icon {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background: #0f0;
+  color: #000;
+  font-size: 24px;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 0 10px #0f0;
+}
+
+#chatbot-window {
+  position: fixed;
+  bottom: 90px;
+  right: 25px;
+  width: 300px;
+  max-height: 400px;
+  background-color: #000;
+  color: #0f0;
+  border: 2px solid #0f0;
+  padding: 10px;
+  display: none;
+  flex-direction: column;
+  z-index: 1000;
+  font-family: monospace;
+}
+
+#chatbox {
+  height: 250px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+  background-color: #111;
+  padding: 5px;
+}
+
+#chat-input {
+  width: calc(100% - 60px);
+  background-color: #222;
+  color: #0f0;
+  border: 1px solid #0f0;
+  padding: 5px;
+}
+
+#chatbot-window button {
+  width: 50px;
+  background: #0f0;
+  color: #000;
+  border: none;
+  cursor: pointer;
+}
+#world-clocks {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding: 0.75rem 1rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1.2rem;
+  color: #33ff33;
+  background-color: rgba(0, 0, 0, 0.9);
+  border-top: 1px solid #33ff33;
+  border-bottom: 1px solid #33ff33;
+  margin-bottom: 1rem;
+}
+
+#world-clocks div {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
