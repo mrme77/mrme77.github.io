@@ -1,4 +1,228 @@
-/* style.css */
+// --- Profanity list & function (top of file so all functions can use it) ---
+const PROFANITY_LIST = ["badword1", "badword2", "badword3"];
+
+function containsProfanity(text) {
+  const lower = text.toLowerCase();
+  return PROFANITY_LIST.some(word => lower.includes(word));
+}
+
+// --- Original sendMessage function ---
+async function sendMessage(userInput) {
+  const response = await fetch("mrme77githubio-backend.vercel.app/chat", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ prompt: userInput })
+  });
+
+  const data = await response.json();
+  displayMessage(data.reply, "Pasquale-AI");
+}
+
+// --- Clock updater ---
+function updateClocks() {
+  const now = new Date();
+  const options = {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false,
+  };
+  document.getElementById('clock-pt').textContent =
+    new Intl.DateTimeFormat('en-US', { ...options, timeZone: 'America/Los_Angeles' }).format(now);
+
+  document.getElementById('clock-ct').textContent =
+    new Intl.DateTimeFormat('en-US', { ...options, timeZone: 'America/Chicago' }).format(now);
+
+  document.getElementById('clock-et').textContent =
+    new Intl.DateTimeFormat('en-US', { ...options, timeZone: 'America/New_York' }).format(now);
+
+  document.getElementById('clock-rome').textContent =
+    new Intl.DateTimeFormat('en-US', { ...options, timeZone: 'Europe/Rome' }).format(now);
+}
+
+setInterval(updateClocks, 1000);
+updateClocks();
+
+// --- Tab switching ---
+function showTab(tabId) {
+  const tabs = document.querySelectorAll('.tab');
+  tabs.forEach(tab => tab.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+
+  const cursors = document.querySelectorAll('.cursor');
+  cursors.forEach(c => c.style.display = 'none');
+
+  const activeCursor = document.getElementById('cursor-' + tabId);
+  if (activeCursor) activeCursor.style.display = 'inline-block';
+}
+// --- Close chat button ---
+document.getElementById("close-chat").addEventListener("click", () => {
+  const chatWindow = document.getElementById("chatbot-window");
+  const chatbox = document.getElementById("chatbox");
+
+  chatbox.innerHTML = ""; // clear all messages
+  chatWindow.style.display = "none"; // hide window
+});
+
+// --- Modified toggleChat to start fresh ---
+function toggleChat() {
+  const chatWindow = document.getElementById("chatbot-window");
+  const chatbox = document.getElementById("chatbox");
+
+  if (chatWindow.style.display === "flex") {
+    chatWindow.style.display = "none";
+  } else {
+    chatbox.innerHTML = ""; // clear messages on open
+    chatWindow.style.display = "flex";
+  }
+}
+// --- Chat window toggle ---
+// function toggleChat() {
+//   const chatWindow = document.getElementById("chatbot-window");
+//   chatWindow.style.display = chatWindow.style.display === "flex" ? "none" : "flex";
+// }
+
+// --- Main sendChat function with guardrails ---
+async function sendChat() {
+  const input = document.getElementById("chat-input");
+  const message = input.value.trim();
+
+  // Guardrail #0: Empty input
+  if (!message) return;
+
+  // Guardrail #1: Length check
+  if (message.length > 150) {
+    alert("Your message is too long. Please keep it under 150 characters.");
+    return;
+  }
+
+  // Guardrail #2: Profanity check
+  if (containsProfanity(message)) {
+    alert("Your message contains inappropriate language.");
+    return;
+  }
+
+  const chatbox = document.getElementById("chatbox");
+  chatbox.innerHTML += `<div><strong>User:</strong> ${message}</div>`;
+  input.value = '';
+
+  try {
+    const response = await fetch("mrme77githubio-backend.vercel.app/chat", {
+      method: "POST",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt: message })
+    });
+
+    const data = await response.json();
+
+    if (!data.reply) {
+      chatbox.innerHTML += `<div><strong>Pasquale-AI:</strong> Sorry, no response received.</div>`;
+    } else {
+      chatbox.innerHTML += `<div><strong>Pasquale-AI:</strong> ${data.reply}</div>`;
+    }
+  } catch (err) {
+    chatbox.innerHTML += `<div><strong>Pasquale-AI:</strong> Error connecting to server.</div>`;
+  }
+
+  chatbox.scrollTop = chatbox.scrollHeight;
+}
+// const messageBox = document.getElementById("message");
+// const charCount = document.getElementById("charCount");
+
+// messageBox.addEventListener("input", () => {
+//   charCount.textContent = `${messageBox.value.length} / 255`;
+// });
+// const showFormBtn = document.getElementById("showFormBtn");
+// const contactForm = document.getElementById("contactForm");
+
+// showFormBtn.addEventListener("click", () => {
+//   if (contactForm.style.display === "none") {
+//     contactForm.style.display = "flex";
+//     showFormBtn.style.display = "none"; // hide the button after showing the form
+//   }
+// });
+const showFormBtn = document.getElementById("showFormBtn");
+const contactForm = document.getElementById("contactForm");
+const messageBox = document.getElementById("message");
+const charCount = document.getElementById("charCount");
+
+// Toggle form with animation
+showFormBtn.addEventListener("click", () => {
+  contactForm.style.display = "flex"; // make it visible first
+  setTimeout(() => contactForm.classList.add("show"), 50); // add animation class
+  showFormBtn.style.display = "none";
+});
+
+// Character counter
+messageBox.addEventListener("input", () => {
+  charCount.textContent = `${messageBox.value.length} / 255`;
+});
+// Handle form submission
+// contactForm.addEventListener("submit", async (e) => {
+//   e.preventDefault();
+
+//   const formData = {
+//     name: document.getElementById("name").value.trim(),
+//     email: document.getElementById("email").value.trim(),
+//     message: messageBox.value.trim()
+//   };
+
+//   try {
+//     const res = await fetch("http://localhost:3000/contact", {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify(formData)
+//     });
+
+//     if (res.ok) {
+//       alert("Message sent successfully!");
+//       contactForm.reset();
+//       charCount.textContent = "0 / 255";
+//     } else {
+//       alert("Error sending message. Please try again.");
+//     }
+//   } catch (err) {
+//     console.error("Error:", err);
+//     alert("Could not connect to the server.");
+//   }
+// });
+contactForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const formData = {
+    name: document.getElementById("name").value.trim(),
+    email: document.getElementById("email").value.trim(),
+    message: messageBox.value.trim()
+  };
+
+  try {
+    const res = await fetch("mrme77githubio-backend.vercel.app/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData)
+    });
+
+    if (res.ok) {
+      alert("Message sent successfully!");
+      contactForm.reset();
+      charCount.textContent = "0 / 255";
+      // <-- Here add code to close the form:
+      contactForm.style.display = "none";
+      showFormBtn.style.display = "inline-block"; // Show the button again
+    } else {
+      alert("Error sending message. Please try again.");
+    }
+  } catch (err) {
+    console.error("Error:", err);
+    alert("Could not connect to the server.");
+  }
+});
+
+
+
+/* 
 
 body {
   margin: 0;
@@ -186,3 +410,4 @@ a {
   align-items: center;
   gap: 0.5rem;
 }
+ */
