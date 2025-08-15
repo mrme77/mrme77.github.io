@@ -6,6 +6,245 @@
   <title>Pasquale Salomone</title>
   <link rel="icon" href="/favicon.ico" type="image/x-icon" />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <!-- <script src="js/script.js" defer></script> -->
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'IBM Plex Mono', monospace;
+      overflow-x: hidden;
+    }
+    .banner-image {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .tab {
+      padding: 1rem;
+      box-sizing: border-box;
+      display: none;
+    }
+    .tab.active {
+      display: block;
+    }
+    .tab p {
+      text-align: justify;
+    }
+  </style>
+</head>
+<!-- Chatbot Button -->
+<div id="chatbot-icon" onclick="toggleChat()">
+  👽
+</div>
+
+<!-- Chatbot Window -->
+<!-- <div id="chatbot-window">
+  <div id="chatbox"></div>
+  <input type="text" id="chat-input" placeholder="What do you want to know about me?">
+  <button onclick="sendChat()">Send</button>
+</div> -->
+<!-- Chatbot Window -->
+<div id="chatbot-window">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+    <strong>AI Chatbot</strong>
+    <button id="close-chat">X</button>
+  </div>
+  <div id="chatbox"></div>
+  <input type="text" id="chat-input" placeholder="What do you want to know about me?">
+  <button onclick="sendChat()">Send</button>
+</div>
+
+
+<body>
+  <div class="overlay">
+    <nav>
+      <ul>
+        <li><a href="#" onclick="showTab('bio')">Bio <span class="cursor" id="cursor-bio">></span></a></li>
+        <li><a href="#" onclick="showTab('linkedin')">LinkedIn <span class="cursor" id="cursor-linkedin" style="display:none">></span></a></li>
+        <li><a href="#" onclick="showTab('articles')">Articles <span class="cursor" id="cursor-articles" style="display:none">></span></a></li>
+        <li><a href="#" onclick="showTab('github')">GitHub <span class="cursor" id="cursor-github" style="display:none">></span></a></li>
+        <li><a href="#" onclick="showTab('projects')">Projects <span class="cursor" id="cursor-projects" style="display:none">></span></a></li>
+        <li><a href="#" onclick="showTab('contact-me')">Contact Me <span class="cursor" id="cursor-projects" style="display:none">></span></a></li>
+      </ul>
+    </nav>
+    <div id="world-clocks">
+  <div><strong>PT:</strong> <span id="clock-pt"></span></div>
+  <div><strong>CT:</strong> <span id="clock-ct"></span></div>
+  <div><strong>ET:</strong> <span id="clock-et"></span></div>
+  <div><strong>Rome:</strong> <span id="clock-rome"></span></div>
+</div>
+
+    <main>
+     <section id="contact-me" class="tab">
+  <div class="banner-container">
+    <h1>Contact</h1>
+    <p>
+      If you have any questions, want to collaborate, or just want to say hi, feel free to reach out!
+    </p>
+
+    <!-- Show Form Button -->
+    <button id="showFormBtn" class="contact-toggle-btn">Message Me Form</button>
+
+    <!-- Contact Form (hidden by default) -->
+    <form id="contactForm" class="contact-box" style="display: none;">
+      <div class="form-group">
+        <label for="name">Your Name:</label>
+        <input type="text" id="name" name="name" placeholder="Pepp O'Pallunar" required autocomplete="name"/>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Your Email:</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email"/>
+      </div>
+
+      <div class="form-group">
+        <label for="message">Message:</label>
+        <textarea 
+          id="message" 
+          name="message" 
+          placeholder="Write your message here..."
+          rows="5" 
+          maxlength="255" 
+          required></textarea>
+        <small id="charCount">0 / 255</small>
+      </div>
+
+      <button type="submit">Send Message</button>
+    </form>
+
+    <div id="contact-status"></div>
+  </div>
+</section>
+
+
+
+      <section id="bio" class="tab active">
+        <div class="banner-container">
+          <img src="assets/bioimage.jpg" alt="Bio Banner" class="banner-image" />
+          <h1>Bio</h1>
+          <p>
+            Ciao! I’m <strong>Pasquale Salomone</strong> — a Data Scientist with a passion for solving real problems through smart, efficient use of technology. I’m driven by curiosity, creativity, and a love for learning, whether it’s mastering the latest in AI or just figuring out how a few lines of regex can save hours of work 😎.
+          </p>
+          <p>
+            My journey into data science started back in 2013 while working as a contractor for the U.S. Army in Germany. Before that, I served as an officer in the Italian Air Force, an experience that shaped my approach to strategy, discipline, and teamwork.
+          </p>
+          <p>
+            With over 10 years in the field, I focus on turning data into actionable insights that align with business goals. I enjoy bridging the gap between complex analytics and practical outcomes—especially when it comes to exploring how neural networks and large language models are changing the game.
+          </p>
+          <p>
+            My academic background includes a BA in Political Science, an MS in Health Care Administration, and an MS in Data Analytics. I also hold CompTIA Data+ and Databricks GenAI Engineer Associate certifications. Above all, I believe learning never stops. It’s not just something I do, it’s who I am. Staying curious and adaptable helps me grow as a professional and keeps me relevant in the data science realm.
+          </p>
+        </div>
+      </section>
+     
+      <section id="linkedin" class="tab">
+        <div class="banner-container">
+          <img src="assets/linkpro copy.jpg" alt="LinkedIn Banner" class="banner-image" />
+          <h1>LinkedIn</h1>
+          <p>
+            Welcome to my LinkedIn! 🌐 I value LinkedIn as an incredible platform for networking and staying up to date with current industry trends. Whether it's connecting with like-minded professionals, sharing insights, or learning from thought leaders, LinkedIn allows me to grow my network and stay informed about the latest developments in the field. 📈
+          </p>
+          <p>
+            I believe that building meaningful connections and engaging with industry-relevant content is key to personal and professional growth. Feel free to connect, share ideas, or start a conversation—let's collaborate and grow together! 🤝
+          </p>
+          <p>
+            <a href="https://www.linkedin.com/in/pasquale-salomone/" target="_blank" rel="noopener">
+              Visit my LinkedIn profile
+            </a>
+          </p>
+        </div>
+      </section>
+
+      <section id="articles" class="tab">
+        <div class="banner-container">
+          <img src="assets/articles.png" alt="Articles Banner" class="banner-image" />
+          <h1>Articles</h1>
+          <ul>
+            <li>
+              <a href="https://medium.com/@psalomone33/why-i-traded-my-pajamas-for-a-commute-sometimes-75181f532ec6" target="_blank" rel="noopener">
+                Why I Traded My Pajamas for a Commute (Sometimes)
+              </a>
+            </li>
+            <br>
+            <li>
+              <a href="https://medium.com/p/9770d6886539" target="_blank" rel="noopener">
+                Draft Like a Data Wizard: How Recommender Systems Can Dominate Your Fantasy Basketball League
+              </a>
+            </li>
+            <br>
+            <li>
+              <a href="https://medium.com/p/3f8e7bc5c598" target="_blank" rel="noopener">
+                Could You Be Next? What Leads to School Dropouts
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="github" class="tab">
+        <div class="banner-container">
+          <img src="assets/linkprofile.png" alt="GitHub Banner" class="banner-image" />
+          <h1>GitHub</h1>
+          <p>
+            Welcome to my GitHub! 🚀 This is the space where I combine personal projects with training exercises, showcasing my journey of learning and building. I firmly believe that the best way to learn is by doing, and what better way to grow than by diving into code and sharing the results? 💻
+          </p>
+          <p>
+            Whether it's experimenting with new concepts or refining skills through hands-on projects, this repository reflects my passion for continuous learning and development. Feel free to fork my repositories and collaborate—I'm always open to working together and exchanging ideas. Let's build something amazing! 🌟
+          </p>
+          <p>
+            <a href="https://github.com/mrme77" target="_blank" rel="noopener">
+              Visit my GitHub profile
+            </a>
+          </p>
+        </div>
+      </section>
+
+      <section id="projects" class="tab">
+        <div class="banner-container">
+          <img src="assets/visits.gif" alt="Projects Banner" class="banner-image" />
+          <h1>Projects</h1>
+          
+<p>
+  When I have a bit of breathing room, I like to build things — sometimes to learn something new, other times to revisit old ideas with fresh eyes. Lately, I’ve been digging into tools like Google Vertex AI and Hugging Face to get a deeper feel for what they can actually do in real-world scenarios.
+</p>
+<p>
+  One project I’ve been thinking about is training a neural network to predict presidential executive orders—part historical deep dive, part machine learning challenge. I'm also experimenting with running a local LLM at home through the Ollama interface, mostly to cut out token limits and fees, but also because I like having full control and privacy.
+These kinds of projects keep me sharp, curious, and connected to the fast-moving world of AI and Data Science.
+</p>
+<p>
+  Here are some of my recent projects that showcase my skills and interests in data science and AI:
+</p>
+
+            <ul>
+            <li>
+              <a href="https://huggingface.co/spaces/mrme77/PDF-To-Social-Media-Post-Generator" target="_blank" rel="noopener">
+                <strong>PDF To Social Media Post Generator</strong>
+              </a>
+            </li>
+            <br>
+            
+            
+          </ul>
+          <p>
+              <strong>More projects coming soon!</strong> Stay tuned for updates.
+            </p>
+        </div>
+      </section>
+    </main>
+  </div>
+<script src="js/script.js" defer></script>
+</body>
+</html>
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pasquale Salomone</title>
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   <style>
     html, body {
@@ -181,3 +420,4 @@ These kinds of projects keep me sharp, curious, and connected to the fast-moving
   <script src="script.js"></script>
 </body>
 </html>
+ -->
