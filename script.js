@@ -56,32 +56,6 @@ function toggleChat() {
 }
 
 // --- Send chat messages ---
-// async function sendChat() {
-//   const input = document.getElementById("chat-input");
-//   const message = input.value.trim();
-
-//   if (!message) return;
-//   if (message.length > 150) { alert("Your message is too long. Please keep it under 150 characters."); return; }
-//   if (containsProfanity(message)) { alert("Your message contains inappropriate language."); return; }
-
-//   chatbox.innerHTML += `<div><strong>User:</strong> ${message}</div>`;
-//   input.value = '';
-
-//   try {
-//     const response = await fetch("https://mrme77githubio-backend.vercel.app/chat", {
-//       method: "POST",
-//       headers: { 'Content-Type': 'application/json' },
-//       body: JSON.stringify({ prompt: message })
-//     });
-
-//     const data = await response.json();
-//     chatbox.innerHTML += `<div><strong>Pasquale-AI:</strong> ${data.reply || "Sorry, no response received."}</div>`;
-//   } catch (err) {
-//     chatbox.innerHTML += `<div><strong>Pasquale-AI:</strong> Error connecting to server.</div>`;
-//   }
-
-//   chatbox.scrollTop = chatbox.scrollHeight;
-// }
 async function sendChat() {
   const input = document.getElementById("chat-input");
   const message = input.value.trim();
@@ -100,19 +74,45 @@ async function sendChat() {
       body: JSON.stringify({ prompt: message })
     });
 
-    if (!response.ok) {
-      throw new Error(`Server returned ${response.status}`);
-    }
-
     const data = await response.json();
     chatbox.innerHTML += `<div><strong>Pasquale-AI:</strong> ${data.reply || "Sorry, no response received."}</div>`;
   } catch (err) {
-    console.error("Chat fetch error:", err);
-    chatbox.innerHTML += `<div><strong>Pasquale-AI:</strong> Error connecting to server. Check console for details.</div>`;
+    chatbox.innerHTML += `<div><strong>Pasquale-AI:</strong> Error connecting to server.</div>`;
   }
 
   chatbox.scrollTop = chatbox.scrollHeight;
 }
+// async function sendChat() {
+//   const input = document.getElementById("chat-input");
+//   const message = input.value.trim();
+
+//   if (!message) return;
+//   if (message.length > 150) { alert("Your message is too long. Please keep it under 150 characters."); return; }
+//   if (containsProfanity(message)) { alert("Your message contains inappropriate language."); return; }
+
+//   chatbox.innerHTML += `<div><strong>User:</strong> ${message}</div>`;
+//   input.value = '';
+
+//   try {
+//     const response = await fetch("https://mrme77githubio-backend.vercel.app/chat", {
+//       method: "POST",
+//       headers: { 'Content-Type': 'application/json' },
+//       body: JSON.stringify({ prompt: message })
+//     });
+
+//     if (!response.ok) {
+//       throw new Error(`Server returned ${response.status}`);
+//     }
+
+//     const data = await response.json();
+//     chatbox.innerHTML += `<div><strong>Pasquale-AI:</strong> ${data.reply || "Sorry, no response received."}</div>`;
+//   } catch (err) {
+//     console.error("Chat fetch error:", err);
+//     chatbox.innerHTML += `<div><strong>Pasquale-AI:</strong> Error connecting to server. Check console for details.</div>`;
+//   }
+
+//   chatbox.scrollTop = chatbox.scrollHeight;
+// }
 
 // --- Contact form handling ---
 const showFormBtn = document.getElementById("showFormBtn");
