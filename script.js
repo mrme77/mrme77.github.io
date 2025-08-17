@@ -68,7 +68,7 @@ async function sendChat() {
   input.value = '';
 //"https://mrme77githubio-backend.vercel.app/chat",
   try {
-    const response = await fetch("https://mrme77githubio-backend.vercel.app/api/chat", {
+    const response = await fetch("https://mrme77githubio-backend.vercel.app/chat", {
       method: "POST",
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ prompt: message })
