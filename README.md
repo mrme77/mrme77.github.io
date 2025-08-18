@@ -32,22 +32,21 @@ This site is part portfolio, part playground. It keeps me hands-on with front-en
 ├── script.js       # Interactivity
 ├── assets/         # Images and banners
 └── README.md       # You're reading it!
+```
+---
 
 🛠️ How to Run Locally
 Clone the repo:
-- git clone https://github.com/mrme77/mrme77.github.io.git
+- ```git clone https://github.com/mrme77/mrme77.github.io.git```
 - Open index.html in your browser — that’s it! 🚀
-
+- Click the navigation tabs to explore different sections.
+---
 🌱 What’s Next
  - Add interactive project demos (maybe small AI widgets 🤖)
  - Showcase recent articles directly in the site
  - Polish design with animations and transitions
  - Expand Projects section as new work gets published
-## How to Use
-
-1. Clone or download the repository.
-2. Open `index.html` in your browser.
-3. Click the navigation tabs to explore different sections.
+---
 
 ## Customization
 
@@ -55,7 +54,7 @@ Clone the repo:
 - Edit section content in `index.html` to reflect your own experience or projects.
 - Adjust styles in `style.css` for further personalization.
 - Modify `script.js` to change tab behavior or add new interactive features.
-
+---
 ## Credits
 
 <p>
