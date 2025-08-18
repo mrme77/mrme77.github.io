@@ -48,14 +48,14 @@ Clone the repo:
  - Expand Projects section as new work gets published
 ---
 
-## Customization
+🛠️ Customization
 
 - Replace images in the `assets/` folder to update banners.
 - Edit section content in `index.html` to reflect your own experience or projects.
 - Adjust styles in `style.css` for further personalization.
 - Modify `script.js` to change tab behavior or add new interactive features.
 ---
-## Credits
+📚 Credits
 
 <p>
   Created by Pasquale Salomone.<br>
