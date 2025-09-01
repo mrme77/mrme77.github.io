@@ -5,6 +5,115 @@ function containsProfanity(text) {
   const lower = text.toLowerCase();
   return PROFANITY_LIST.some(word => lower.includes(word));
 }
+const JOKES = [
+  "Why don't scientists trust atoms? Because they make up everything!",
+  "Why did the scarecrow win an award? Because he was outstanding in his field!",
+  "I told my wife she was drawing her eyebrows too high. She looked surprised.",
+  "Why did the math book look sad? Because it had too many problems.",
+  "Parallel lines have so much in common. It’s a shame they’ll never meet.",
+  "Why don’t skeletons fight each other? They don’t have the guts.",
+  "What do you call fake spaghetti? An impasta.",
+  "Why did the bicycle fall over? Because it was two-tired.",
+  "What do you call cheese that isn't yours? Nacho cheese.",
+  "Why can't you hear a pterodactyl go to the bathroom? Because the 'P' is silent.",
+  "What do you call a factory that makes good products? A satisfactory.",
+  "Why did the golfer bring two pairs of pants? In case he got a hole in one.",
+  "Why did the tomato turn red? Because it saw the salad dressing.",
+  "Why did the chicken join a band? Because it had the drumsticks.",
+  "Why did the coffee file a police report? It got mugged.",
+  "Why did the computer go to the doctor? It had a virus.",
+  "Why was the math lecture so long? The professor kept going off on a tangent.",
+  "Why did the cookie go to the hospital? Because it felt crummy.",
+  "Why did the stadium get hot after the game? All the fans left.",
+  "Why did the banana go to the doctor? Because it wasn’t peeling well.",
+  "Why did the man run around his bed? Because he was trying to catch up on his sleep.",
+  "Why did the picture go to jail? Because it was framed.",
+  "Why did the student eat his homework? Because his teacher told him it was a piece of cake.",
+  "Why did the bicycle stand up by itself? It was two-tired.",
+  "Why did the golfer wear two pairs of pants? In case he got a hole in one.",
+  "Why did the scarecrow get promoted? Because he was outstanding in his field.",
+  "Why did the math book look sad? Because it had too many problems.",
+  "Why did the chicken cross the playground? To get to the other slide.",
+  "Why did the cow win an award? Because he was outstanding in his field.",
+  "Why did the tomato turn red? Because it saw the salad dressing.",
+  "Why did the computer go to the doctor? It had a virus.",
+  "Why did the cookie go to the hospital? Because it felt crummy.",
+  "Why did the stadium get hot after the game? All the fans left.",
+  "Why did the banana go to the doctor? Because it wasn’t peeling well.",
+  "Why did the man run around his bed? Because he was trying to catch up on his sleep.",
+  "Why did the picture go to jail? Because it was framed.",
+  "Why did the student eat his homework? Because his teacher told him it was a piece of cake.",
+  "Why did the bicycle stand up by itself? It was two-tired.",
+  "Why did the golfer wear two pairs of pants? In case he got a hole in one.",
+  "Why did the scarecrow get promoted? Because he was outstanding in his field.",
+  "Why did the math book look sad? Because it had too many problems.",
+  "Why did the chicken cross the playground? To get to the other slide.",
+  "Why did the cow win an award? Because he was outstanding in his field.",
+  "Why did the tomato turn red? Because it saw the salad dressing.",
+  "Why did the computer go to the doctor? It had a virus.",
+  "Why did the cookie go to the hospital? Because it felt crummy.",
+  "Why did the stadium get hot after the game? All the fans left.",
+  "Why did the banana go to the doctor? Because it wasn’t peeling well.",
+  "Why did the man run around his bed? Because he was trying to catch up on his sleep.",
+  "Why did the picture go to jail? Because it was framed.",
+  "Why did the student eat his homework? Because his teacher told him it was a piece of cake.",
+  "Why did the bicycle stand up by itself? It was two-tired.",
+  "Why did the golfer wear two pairs of pants? In case he got a hole in one.",
+  "Why did the scarecrow get promoted? Because he was outstanding in his field.",
+  "Why did the math book look sad? Because it had too many problems.",
+  "Why did the chicken cross the playground? To get to the other slide.",
+  "Why did the cow win an award? Because he was outstanding in his field.",
+  "Why did the tomato turn red? Because it saw the salad dressing.",
+  "Why did the computer go to the doctor? It had a virus.",
+  "Why did the cookie go to the hospital? Because it felt crummy.",
+  "Why did the stadium get hot after the game? All the fans left.",
+  "Why did the banana go to the doctor? Because it wasn’t peeling well.",
+  "Why did the man run around his bed? Because he was trying to catch up on his sleep.",
+  "Why did the picture go to jail? Because it was framed.",
+  "Why did the student eat his homework? Because his teacher told him it was a piece of cake.",
+  "Why did the bicycle stand up by itself? It was two-tired.",
+  "Why did the golfer wear two pairs of pants? In case he got a hole in one.",
+  "Why did the scarecrow get promoted? Because he was outstanding in his field.",
+  "Why did the math book look sad? Because it had too many problems.",
+  "Why did the chicken cross the playground? To get to the other slide.",
+  "Why did the cow win an award? Because he was outstanding in his field.",
+  "Why did the tomato turn red? Because it saw the salad dressing.",
+  "Why did the computer go to the doctor? It had a virus.",
+  "Why did the cookie go to the hospital? Because it felt crummy.",
+  "Why did the stadium get hot after the game? All the fans left.",
+  "Why did the banana go to the doctor? Because it wasn’t peeling well.",
+  "Why did the man run around his bed? Because he was trying to catch up on his sleep.",
+  "Why did the picture go to jail? Because it was framed.",
+  "Why did the student eat his homework? Because his teacher told him it was a piece of cake.",
+  "Why did the bicycle stand up by itself? It was two-tired.",
+  "Why did the golfer wear two pairs of pants? In case he got a hole in one.",
+  "Why did the scarecrow get promoted? Because he was outstanding in his field.",
+  "Why did the math book look sad? Because it had too many problems.",
+  "Why did the chicken cross the playground? To get to the other slide.",
+  "Why did the cow win an award? Because he was outstanding in his field.",
+  "Why did the tomato turn red? Because it saw the salad dressing.",
+  "Why did the computer go to the doctor? It had a virus.",
+  "Why did the cookie go to the hospital? Because it felt crummy.",
+  "Why did the stadium get hot after the game? All the fans left.",
+  "Why did the banana go to the doctor? Because it wasn’t peeling well.",
+  "Why did the man run around his bed? Because he was trying to catch up on his sleep.",
+  "Why did the picture go to jail? Because it was framed.",
+  "Why did the student eat his homework? Because his teacher told him it was a piece of cake.",
+  "Why did the bicycle stand up by itself? It was two-tired.",
+  "Why did the golfer wear two pairs of pants? In case he got a hole in one.",
+  "Why did the scarecrow get promoted? Because he was outstanding in his field.",
+  "Why did the math book look sad? Because it had too many problems.",
+  "Why did the chicken cross the playground? To get to the other slide.",
+  "Why did the cow win an award? Because he was outstanding in his field.",
+  "Why did the tomato turn red? Because it saw the salad dressing.",
+  "Why did the computer go to the doctor? It had a virus.",
+  "Why did the cookie go to the hospital? Because it felt crummy.",
+  "Why did the stadium get hot after the game? All the fans left.",
+  "Why did the banana go to the doctor? Because it wasn’t peeling well.",
+  "Why did the man run around his bed? Because he was trying to catch up on his sleep.",
+  "Why did the picture go to jail? Because it was framed.",
+  "Why did the student eat his homework? Because his teacher told him it was a piece of cake."
+];
 
 // --- Clock updater ---
 function updateClocks() {
@@ -56,6 +165,32 @@ function toggleChat() {
 }
 
 // --- Send chat messages ---
+// async function sendChat() {
+//   const input = document.getElementById("chat-input");
+//   const message = input.value.trim();
+
+//   if (!message) return;
+//   if (message.length > 150) { alert("Your message is too long. Please keep it under 150 characters."); return; }
+//   if (containsProfanity(message)) { alert("Your message contains inappropriate language."); return; }
+
+//   chatbox.innerHTML += `<div><strong>User:</strong> ${message}</div>`;
+//   input.value = '';
+// //"https://mrme77githubio-backend.vercel.app/chat",
+//   try {
+//     const response = await fetch("https://mrme77githubio-backend.vercel.app/chat", {
+//       method: "POST",
+//       headers: { 'Content-Type': 'application/json' },
+//       body: JSON.stringify({ prompt: message })
+//     });
+
+//     const data = await response.json();
+//     chatbox.innerHTML += `<div><strong>Pasquale-AI:</strong> ${data.reply || "Sorry, no response received."}</div>`;
+//   } catch (err) {
+//     chatbox.innerHTML += `<div><strong>Pasquale-AI:</strong> Error connecting to server.</div>`;
+//   }
+
+//   chatbox.scrollTop = chatbox.scrollHeight;
+// }
 async function sendChat() {
   const input = document.getElementById("chat-input");
   const message = input.value.trim();
@@ -66,19 +201,10 @@ async function sendChat() {
 
   chatbox.innerHTML += `<div><strong>User:</strong> ${message}</div>`;
   input.value = '';
-//"https://mrme77githubio-backend.vercel.app/chat",
-  try {
-    const response = await fetch("https://mrme77githubio-backend.vercel.app/chat", {
-      method: "POST",
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt: message })
-    });
 
-    const data = await response.json();
-    chatbox.innerHTML += `<div><strong>Pasquale-AI:</strong> ${data.reply || "Sorry, no response received."}</div>`;
-  } catch (err) {
-    chatbox.innerHTML += `<div><strong>Pasquale-AI:</strong> Error connecting to server.</div>`;
-  }
+  // Pick a random joke
+  const joke = JOKES[Math.floor(Math.random() * JOKES.length)];
+  chatbox.innerHTML += `<div><strong>Pasquale-AI:</strong> ${joke}</div>`;
 
   chatbox.scrollTop = chatbox.scrollHeight;
 }
