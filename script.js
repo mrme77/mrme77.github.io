@@ -136,6 +136,11 @@ function showTab(tabId) {
 const chatWindow = document.getElementById("chatbot-window");
 const chatbox = document.getElementById("chatbox");
 
+// --- Contact form elements ---
+const messageBox = document.getElementById("message");
+const charCount = document.getElementById("charCount");
+const contactForm = document.getElementById("contactForm");
+
 document.getElementById("close-chat").addEventListener("click", () => {
   chatbox.innerHTML = "";
   chatWindow.style.display = "none";
