@@ -98,20 +98,6 @@ const JOKES = [
   "Why did the banana go to the doctor? Because it wasn’t peeling well.",
   "Why did the man run around his bed? Because he was trying to catch up on his sleep.",
   "Why did the picture go to jail? Because it was framed.",
-  "Why did the student eat his homework? Because his teacher told him it was a piece of cake.",
-  "Why did the bicycle stand up by itself? It was two-tired.",
-  "Why did the golfer wear two pairs of pants? In case he got a hole in one.",
-  "Why did the scarecrow get promoted? Because he was outstanding in his field.",
-  "Why did the math book look sad? Because it had too many problems.",
-  "Why did the chicken cross the playground? To get to the other slide.",
-  "Why did the cow win an award? Because he was outstanding in his field.",
-  "Why did the tomato turn red? Because it saw the salad dressing.",
-  "Why did the computer go to the doctor? It had a virus.",
-  "Why did the cookie go to the hospital? Because it felt crummy.",
-  "Why did the stadium get hot after the game? All the fans left.",
-  "Why did the banana go to the doctor? Because it wasn’t peeling well.",
-  "Why did the man run around his bed? Because he was trying to catch up on his sleep.",
-  "Why did the picture go to jail? Because it was framed.",
   "Why did the student eat his homework? Because his teacher told him it was a piece of cake."
 ];
 
@@ -210,17 +196,21 @@ async function sendChat() {
 }
 
 // --- Contact form handling ---
-const showFormBtn = document.getElementById("showFormBtn");
-const contactForm = document.getElementById("contactForm");
-const messageBox = document.getElementById("message");
-const charCount = document.getElementById("charCount");
+// Show contact form function (called by card onclick)
+function toggleContactForm() {
+  const contactForm = document.getElementById("contactForm");
+  if (contactForm.style.display === "none" || contactForm.style.display === "") {
+    contactForm.style.display = "flex";
+    setTimeout(() => contactForm.classList.add("show"), 50);
+    contactForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else {
+    contactForm.classList.remove("show");
+    setTimeout(() => contactForm.style.display = "none", 400);
+  }
+}
 
-// Show contact form
-showFormBtn.addEventListener("click", () => {
-  contactForm.style.display = "flex";
-  setTimeout(() => contactForm.classList.add("show"), 50);
-  showFormBtn.style.display = "none";
-});
+// Old button listener removed
+// showFormBtn.addEventListener("click", ...);
 
 // Character counter
 messageBox.addEventListener("input", () => {
@@ -249,7 +239,7 @@ contactForm.addEventListener("submit", async (e) => {
       contactForm.reset();
       charCount.textContent = "0 / 255";
       contactForm.style.display = "none";
-      showFormBtn.style.display = "inline-block";
+      // showFormBtn.style.display = "inline-block"; // Button removed
     } else {
       alert("Error sending message. Please try again.");
     }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8" />
@@ -10,25 +11,31 @@
   <link rel="stylesheet" href="style.css">
   <!-- <script src="js/script.js" defer></script> -->
   <style>
-    html, body {
+    html,
+    body {
       margin: 0;
       padding: 0;
       font-family: 'IBM Plex Mono', monospace;
       overflow-x: hidden;
     }
+
     .banner-image {
       width: 100%;
       height: auto;
       display: block;
     }
+
     .tab {
-      padding: 1rem;
       box-sizing: border-box;
       display: none;
+      padding: 0;
+      /* Removed padding */
     }
+
     .tab.active {
       display: block;
     }
+
     .tab p {
       text-align: justify;
     }
@@ -62,193 +69,197 @@
     <nav>
       <ul>
         <li><a href="#" onclick="showTab('bio')">Bio <span class="cursor" id="cursor-bio">></span></a></li>
-        <li><a href="#" onclick="showTab('linkedin')">LinkedIn <span class="cursor" id="cursor-linkedin" style="display:none">></span></a></li>
-        <li><a href="#" onclick="showTab('articles')">Articles <span class="cursor" id="cursor-articles" style="display:none">></span></a></li>
-        <li><a href="#" onclick="showTab('github')">GitHub <span class="cursor" id="cursor-github" style="display:none">></span></a></li>
-<!--         <li><a href="#" onclick="showTab('projects')">Projects <span class="cursor" id="cursor-projects" style="display:none">></span></a></li> -->
-        <li><a href="#" onclick="showTab('contact-me')">Contact Me <span class="cursor" id="cursor-projects" style="display:none">></span></a></li>
+        <li><a href="#" onclick="showTab('blog')">Blog <span class="cursor" id="cursor-articles"
+              style="display:none">></span></a></li>
+        <li><a href="#" onclick="showTab('contact-me')">Contact Me <span class="cursor" id="cursor-projects"
+              style="display:none">></span></a></li>
+        <li><a href="#" onclick="toggleChat()" id="chat-toggle">Chat <span id="cursor-chat" class="cursor"
+              style="display:none">></span></a></li>
       </ul>
     </nav>
-    <div id="world-clocks">
-  <div><strong>PT:</strong> <span id="clock-pt"></span></div>
-  <div><strong>CT:</strong> <span id="clock-ct"></span></div>
-  <div><strong>ET:</strong> <span id="clock-et"></span></div>
-  <div><strong>Rome:</strong> <span id="clock-rome"></span></div>
-</div>
+
 
     <main>
-     <section id="contact-me" class="tab">
-     
-         
-  <div class="banner-container">
-     <img src="assets/visits.gif" alt="Projects Banner" class="banner-image" />
-    <h1>Contact</h1>
-    <p>
-      If you have any questions, want to collaborate, or just want to say hi, feel free to reach out!
-    </p>
+      <section id="contact-me" class="tab">
 
-    <!-- Show Form Button -->
-    <button id="showFormBtn" class="contact-toggle-btn">Message Me Form</button>
 
-    <!-- Contact Form (hidden by default) -->
-    <form id="contactForm" class="contact-box" style="display: none;">
-      <div class="form-group">
-        <label for="name">Your Name:</label>
-        <input type="text" id="name" name="name" placeholder="Pepp O'Pallunar" required autocomplete="name"/>
-      </div>
+        <div class="banner-container">
+          <!-- Banner removed as per user request -->
 
-      <div class="form-group">
-        <label for="email">Your Email:</label>
-        <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email"/>
-      </div>
+          <div class="contact-grid">
+            <!-- Card 1: GitHub -->
+            <div class="retro-card" onclick="window.open('https://github.com/mrme77', '_blank')">
+              <div class="card-icon">&lt;/&gt;</div>
+              <h3>GitHub</h3>
+              <p>Check my repos</p>
+            </div>
 
-      <div class="form-group">
-        <label for="message">Message:</label>
-        <textarea 
-          id="message" 
-          name="message" 
-          placeholder="Write your message here..."
-          rows="5" 
-          maxlength="255" 
-          required></textarea>
-        <small id="charCount">0 / 255</small>
-      </div>
+            <!-- Card 2: LinkedIn -->
+            <div class="retro-card" onclick="window.open('https://www.linkedin.com/in/pasquale-salomone/', '_blank')">
+              <div class="card-icon">in</div>
+              <h3>LinkedIn</h3>
+              <p>Let's connect</p>
+            </div>
 
-      <button type="submit">Send Message</button>
-    </form>
+            <!-- Card 3: Message Form (Toggle) -->
+            <div class="retro-card" id="message-card" onclick="toggleContactForm()">
+              <div class="card-icon">@</div>
+              <h3>Message Me</h3>
+              <p>Send a signal</p>
+            </div>
+          </div>
 
-    <div id="contact-status"></div>
-  </div>
-</section>
+          <!-- Contact Form (hidden by default) -->
+          <form id="contactForm" class="contact-box" style="display: none;">
+            <div class="form-group">
+              <label for="name">Your Name:</label>
+              <input type="text" id="name" name="name" placeholder="Pepp O'Pallunar" required autocomplete="name" />
+            </div>
+
+            <div class="form-group">
+              <label for="email">Your Email:</label>
+              <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email" />
+            </div>
+
+            <div class="form-group">
+              <label for="message">Message:</label>
+              <textarea id="message" name="message" placeholder="Write your message here..." rows="5" maxlength="255"
+                required></textarea>
+              <small id="charCount">0 / 255</small>
+            </div>
+
+            <button type="submit">Send Message</button>
+          </form>
+
+          <div id="contact-status"></div>
+        </div>
+      </section>
 
 
 
       <section id="bio" class="tab active">
+        <div id="world-clocks">
+          <div><strong>PT:</strong> <span id="clock-pt"></span></div>
+          <div><strong>CT:</strong> <span id="clock-ct"></span></div>
+          <div><strong>ET:</strong> <span id="clock-et"></span></div>
+          <div><strong>Rome:</strong> <span id="clock-rome"></span></div>
+        </div>
         <div class="banner-container">
           <img src="assets/bioimage.jpg" alt="Bio Banner" class="banner-image" />
           <h1>Bio</h1>
           <p>
-            Ciao! I’m <strong>Pasquale Salomone</strong> — a Data Scientist with a passion for solving real problems through smart, efficient use of technology. I’m driven by curiosity, creativity, and a love for learning, whether it’s mastering the latest in AI or just figuring out how a few lines of regex can save hours of work 😎.
+            Ciao! I’m <strong>Pasquale Salomone</strong> — a Data Scientist with a passion for solving real problems
+            through smart, efficient use of technology. I’m driven by curiosity, creativity, and a love for learning,
+            whether it’s mastering the latest in AI or just figuring out how a few lines of regex can save hours of
+            work
+            😎.
           </p>
           <p>
-            My journey into data science started back in 2013 while working as a contractor for the U.S. Army in Germany. Before that, I served as an officer in the Italian Air Force, an experience that shaped my approach to strategy, discipline, and teamwork.
+            My journey into data science started back in 2013 while working as a contractor for the U.S. Army in
+            Germany. Before that, I served as an officer in the Italian Air Force, an experience that shaped my
+            approach
+            to strategy, discipline, and teamwork.
           </p>
           <p>
-            With over 10 years in the field, I focus on turning data into actionable insights that align with business goals. I enjoy bridging the gap between complex analytics and practical outcomes—especially when it comes to exploring how neural networks and large language models are changing the game.
+            With over 10 years in the field, I focus on turning data into actionable insights that align with business
+            goals. I enjoy bridging the gap between complex analytics and practical outcomes—especially when it comes
+            to
+            exploring how neural networks and large language models are changing the game.
           </p>
           <p>
-            My academic background includes a BA in Political Science, an MS in Health Care Administration, and an MS in Data Analytics. I also hold CompTIA Data+ and Databricks GenAI Engineer Associate certifications. Above all, I believe learning never stops. It’s not just something I do, it’s who I am. Staying curious and adaptable helps me grow as a professional and keeps me relevant in the data science realm.
-          </p>
-        </div>
-      </section>
-     
-      <section id="linkedin" class="tab">
-        <div class="banner-container">
-          <img src="assets/linkpro copy.jpg" alt="LinkedIn Banner" class="banner-image" />
-          <h1>LinkedIn</h1>
-          <p>
-            Welcome to my LinkedIn! 🌐 I value LinkedIn as an incredible platform for networking and staying up to date with current industry trends. Whether it's connecting with like-minded professionals, sharing insights, or learning from thought leaders, LinkedIn allows me to grow my network and stay informed about the latest developments in the field. 📈
-          </p>
-          <p>
-            I believe that building meaningful connections and engaging with industry-relevant content is key to personal and professional growth. Feel free to connect, share ideas, or start a conversation—let's collaborate and grow together! 🤝
-          </p>
-          <p>
-            <a href="https://www.linkedin.com/in/pasquale-salomone/" target="_blank" rel="noopener">
-              Visit my LinkedIn profile
-            </a>
+            My academic background includes a BA in Political Science, an MS in Health Care Administration, and an MS
+            in
+            Data Analytics. I also hold CompTIA Data+ and Databricks GenAI Engineer Associate certifications. Above
+            all,
+            I believe learning never stops. It’s not just something I do, it’s who I am. Staying curious and adaptable
+            helps me grow as a professional and keeps me relevant in the data science realm.
           </p>
         </div>
       </section>
 
-      <section id="articles" class="tab">
-        <div class="banner-container">
-          <img src="assets/articles.png" alt="Articles Banner" class="banner-image" />
-          <h1>Articles</h1>
-          <ul>
-            <li>
-              <a href="https://medium.com/@psalomone33/specialize-or-hybridize-your-true-value-always-surfaces-3c3ef8eff7cb" target="_blank" rel="noopener">
-                Specialize or Hybridize: Your True Value Always Surfaces
-              </a>
-            </li>
-            <br>
-            <li> 
-              <a href = "https://medium.com/@psalomone33/vibe-coding-ai-trap-or-cognitive-snap-9ccfb9ceb5d1" target="_blank" rel="noopener">
-                Vibe Coding : AI Trap Or Cognitive Snap?
-                </a>
-             
-            </li>
-             <br>
-            <li>
-              <a href="https://medium.com/@psalomone33/why-i-traded-my-pajamas-for-a-commute-sometimes-75181f532ec6" target="_blank" rel="noopener">
-                Why I Traded My Pajamas for a Commute (Sometimes)
-              </a>
-            </li>
-            <br>
-            <li>
-              <a href="https://medium.com/p/9770d6886539" target="_blank" rel="noopener">
-                Draft Like a Data Wizard: How Recommender Systems Can Dominate Your Fantasy Basketball League
-              </a>
-            </li>
-            <br>
-            <li>
-              <a href="https://medium.com/p/3f8e7bc5c598" target="_blank" rel="noopener">
-                Could You Be Next? What Leads to School Dropouts
-              </a>
-            </li>
-          </ul>
+
+
+
+      <section id="blog" class="tab">
+        <div class="blog-list">
+          <!-- Blog Entry 1 -->
+          <div class="blog-entry"
+            onclick="window.open('https://medium.com/@psalomone33/specialize-or-hybridize-your-true-value-always-surfaces-3c3ef8eff7cb', '_blank')">
+            <div class="blog-date">2025-11-18</div>
+            <div class="blog-content">
+              <h3 class="blog-title">Specialize or Hybridize: Your True Value Always Surfaces</h3>
+              <p class="blog-summary">A deep dive into career strategy and finding your niche.</p>
+              <div class="blog-tags">
+                <span class="tag">[CAREER]</span> <span class="tag">[TECH]</span>
+              </div>
+            </div>
+            <div class="blog-action">&gt; EXECUTE</div>
+          </div>
+
+          <!-- Blog Entry 2 -->
+          <div class="blog-entry"
+            onclick="window.open('https://medium.com/@psalomone33/vibe-coding-ai-trap-or-cognitive-snap-9ccfb9ceb5d1', '_blank')">
+            <div class="blog-date">2025-10-05</div>
+            <div class="blog-content">
+              <h3 class="blog-title">Vibe Coding : AI Trap Or Cognitive Snap?</h3>
+              <p class="blog-summary">Is AI coding a cognitive snap or a dangerous trap? Exploring the nuance.</p>
+              <div class="blog-tags">
+                <span class="tag">[AI]</span> <span class="tag">[CODING]</span>
+              </div>
+            </div>
+            <div class="blog-action">&gt; EXECUTE</div>
+          </div>
+
+          <!-- Blog Entry 3 -->
+          <div class="blog-entry"
+            onclick="window.open('https://medium.com/@psalomone33/why-i-traded-my-pajamas-for-a-commute-sometimes-75181f532ec6', '_blank')">
+            <div class="blog-date">2025-09-12</div>
+            <div class="blog-content">
+              <h3 class="blog-title">Why I Traded My Pajamas for a Commute (Sometimes)</h3>
+              <p class="blog-summary">The hybrid work debate and the value of in-person collaboration.</p>
+              <div class="blog-tags">
+                <span class="tag">[LIFESTYLE]</span> <span class="tag">[WORK]</span>
+              </div>
+            </div>
+            <div class="blog-action">&gt; EXECUTE</div>
+          </div>
+
+          <!-- Blog Entry 4 -->
+          <div class="blog-entry" onclick="window.open('https://medium.com/p/9770d6886539', '_blank')">
+            <div class="blog-date">2025-08-20</div>
+            <div class="blog-content">
+              <h3 class="blog-title">Draft Like a Data Wizard: How Recommender Systems Can Dominate Your Fantasy
+                Basketball
+                League</h3>
+              <p class="blog-summary">Applying data science and recommender systems to fantasy sports.</p>
+              <div class="blog-tags">
+                <span class="tag">[DATA]</span> <span class="tag">[SPORTS]</span>
+              </div>
+            </div>
+            <div class="blog-action">&gt; EXECUTE</div>
+          </div>
+
+          <!-- Blog Entry 5 -->
+          <div class="blog-entry" onclick="window.open('https://medium.com/p/3f8e7bc5c598', '_blank')">
+            <div class="blog-date">2025-07-15</div>
+            <div class="blog-content">
+              <h3 class="blog-title">Could You Be Next? What Leads to School Dropouts</h3>
+              <p class="blog-summary">An analysis of educational data and risk factors.</p>
+              <div class="blog-tags">
+                <span class="tag">[EDUCATION]</span> <span class="tag">[ANALYSIS]</span>
+              </div>
+            </div>
+            <div class="blog-action">&gt; EXECUTE</div>
+          </div>
         </div>
       </section>
 
-      <section id="github" class="tab">
-        <div class="banner-container">
-          <img src="assets/linkprofile.png" alt="GitHub Banner" class="banner-image" />
-          <h1>GitHub</h1>
-          <p>
-            Welcome to my GitHub! 🚀 This is the space where I combine personal projects with training exercises, showcasing my journey of learning and building. I firmly believe that the best way to learn is by doing, and what better way to grow than by diving into code and sharing the results? 💻
-          </p>
-          <p>
-            Whether it's experimenting with new concepts or refining skills through hands-on projects, this repository reflects my passion for continuous learning and development. Feel free to fork my repositories and collaborate—I'm always open to working together and exchanging ideas. Let's build something amazing! 🌟
-          </p>
-          <p>
-            <a href="https://github.com/mrme77" target="_blank" rel="noopener">
-              Visit my GitHub profile
-            </a>
-          </p>
-        </div>
-      </section>
 
-<!--       <section id="projects" class="tab">
-        <div class="banner-container">
-          <img src="assets/visits.gif" alt="Projects Banner" class="banner-image" />
-          <h1>Projects</h1>
-          
-<p>
-  When I have a bit of breathing room, I like to build things — sometimes to learn something new, other times to revisit old ideas with fresh eyes. Lately, I’ve been digging into tools like Google Vertex AI and Hugging Face to get a deeper feel for what they can actually do in real-world scenarios.
-</p>
-<p>
-  Lately I’ve been toying with the idea of training a neural net to predict presidential executive orders—half history rabbit hole, half machine learning puzzle. On the side, I’m also messing around with running a local LLM at home through Ollama. No token limits, no fees, and the bonus of keeping everything private. Projects like these are what keep me curious, sharp, and plugged into the fast-moving world of AI and Data Science.
-</p>
-<p>
-  Here are sone of my recent projects published on Hugging Face:
-</p>
 
-            <ul>
-            <li>
-              <a href="https://huggingface.co/spaces/mrme77/PDF-To-Social-Media-Post-Generator" target="_blank" rel="noopener">
-                <strong>PDF To Social Media Post Generator</strong>
-              </a>
-            </li>
-            <br>
-            
-            
-          </ul>
-          <p>
-              <strong>More projects coming soon!</strong> Stay tuned for updates.
-            </p>
-        </div>
-      </section> -->
+
     </main>
   </div>
-<script src="script.js" defer></script>
+  <script src="script.js" defer></script>
 </body>
+
 </html>
