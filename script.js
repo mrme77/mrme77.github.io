@@ -168,8 +168,8 @@ async function sendChat() {
   input.value = '';
   //"https://mrme77githubio-backend.vercel.app/chat",
   try {
-    // Localhost for verification
-    const response = await fetch("http://localhost:3000/chat", {
+    // Production URL
+    const response = await fetch("https://mrme77githubio-backend.vercel.app/chat", {
       method: "POST",
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ prompt: message })
@@ -202,9 +202,11 @@ function toggleContactForm() {
 // showFormBtn.addEventListener("click", ...);
 
 // Character counter
-messageBox.addEventListener("input", () => {
-  charCount.textContent = `${messageBox.value.length} / 255`;
-});
+if (messageBox) {
+  messageBox.addEventListener("input", () => {
+    charCount.textContent = `${messageBox.value.length} / 255`;
+  });
+}
 
 // Handle contact form submit
 contactForm.addEventListener("submit", async (e) => {
@@ -213,7 +215,7 @@ contactForm.addEventListener("submit", async (e) => {
   const formData = {
     name: document.getElementById("name").value.trim(),
     email: document.getElementById("email").value.trim(),
-    message: messageBox.value.trim()
+    message: messageBox ? messageBox.value.trim() : ""
   };
 
   try {
