@@ -151,32 +151,6 @@ function toggleChat() {
 }
 
 // --- Send chat messages ---
-// async function sendChat() {
-//   const input = document.getElementById("chat-input");
-//   const message = input.value.trim();
-
-//   if (!message) return;
-//   if (message.length > 150) { alert("Your message is too long. Please keep it under 150 characters."); return; }
-//   if (containsProfanity(message)) { alert("Your message contains inappropriate language."); return; }
-
-//   chatbox.innerHTML += `<div><strong>User:</strong> ${message}</div>`;
-//   input.value = '';
-// //"https://mrme77githubio-backend.vercel.app/chat",
-//   try {
-//     const response = await fetch("https://mrme77githubio-backend.vercel.app/chat", {
-//       method: "POST",
-//       headers: { 'Content-Type': 'application/json' },
-//       body: JSON.stringify({ prompt: message })
-//     });
-
-//     const data = await response.json();
-//     chatbox.innerHTML += `<div><strong>Pasquale-AI:</strong> ${data.reply || "Sorry, no response received."}</div>`;
-//   } catch (err) {
-//     chatbox.innerHTML += `<div><strong>Pasquale-AI:</strong> Error connecting to server.</div>`;
-//   }
-
-//   chatbox.scrollTop = chatbox.scrollHeight;
-// }
 async function sendChat() {
   const input = document.getElementById("chat-input");
   const message = input.value.trim();
@@ -185,12 +159,22 @@ async function sendChat() {
   if (message.length > 150) { alert("Your message is too long. Please keep it under 150 characters."); return; }
   if (containsProfanity(message)) { alert("Your message contains inappropriate language."); return; }
 
-  chatbox.innerHTML += `<div><strong>User:</strong> ${message}</div>`;
+  chatbox.innerHTML += `<div class="chat-message user-message"><strong>User:</strong> ${message}</div>`;
   input.value = '';
+  //"https://mrme77githubio-backend.vercel.app/chat",
+  try {
+    // Localhost for verification
+    const response = await fetch("http://localhost:3000/chat", {
+      method: "POST",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt: message })
+    });
 
-  // Pick a random joke
-  const joke = JOKES[Math.floor(Math.random() * JOKES.length)];
-  chatbox.innerHTML += `<div><strong>Pasquale-AI:</strong> ${joke}</div>`;
+    const data = await response.json();
+    chatbox.innerHTML += `<div class="chat-message bot-message"><strong>Pasquale-AI:</strong> ${data.reply || "Sorry, no response received."}</div>`;
+  } catch (err) {
+    chatbox.innerHTML += `<div class="chat-message bot-message"><strong>Pasquale-AI:</strong> Error connecting to server.</div>`;
+  }
 
   chatbox.scrollTop = chatbox.scrollHeight;
 }
