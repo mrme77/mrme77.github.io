@@ -799,6 +799,33 @@ body {
   transition: opacity 0.2s ease;
 }
 
+/* Disintegration Effect */
+.dust-container {
+  position: fixed;
+  pointer-events: none;
+  z-index: 1001;
+  overflow: visible;
+}
+
+.dust-particle {
+  position: absolute;
+  background-repeat: no-repeat;
+  opacity: 1;
+  transition: transform 1s ease-out, opacity 1s ease-out;
+}
+
+@keyframes disperse {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(var(--tx), var(--ty)) rotate(var(--r)) scale(0);
+    opacity: 0;
+  }
+}
+
 .blog-entry:hover .blog-action {
   opacity: 1;
 }

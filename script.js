@@ -142,8 +142,11 @@ const charCount = document.getElementById("charCount");
 const contactForm = document.getElementById("contactForm");
 
 document.getElementById("close-chat").addEventListener("click", () => {
-  chatbox.innerHTML = "";
-  chatWindow.style.display = "none";
+  disintegrate(chatWindow, () => {
+    chatbox.innerHTML = "";
+    chatWindow.style.display = "none";
+    chatWindow.style.visibility = "visible"; // Reset for next time
+  });
 });
 
 function toggleChat() {
@@ -152,6 +155,8 @@ function toggleChat() {
   } else {
     chatbox.innerHTML = "";
     chatWindow.style.display = "flex";
+    chatWindow.style.visibility = "visible"; // Ensure visible if previously disintegrated
+    chatWindow.style.opacity = "1";
   }
 }
 
@@ -305,7 +310,86 @@ contactForm.addEventListener("submit", async (e) => {
 //   });
 
 //   const data = await response.json();
-//   const reply = data.choices[0].message.content;
-//   chatbox.innerHTML += `<div><strong>Bot:</strong> ${reply}</div>`;
-//   chatbox.scrollTop = chatbox.scrollHeight;
-// }
+// --- Disintegration Effect ---
+function disintegrate(element, callback) {
+  // Use html2canvas to capture the element
+  html2canvas(element, {
+    backgroundColor: null,
+    scale: 1,
+    logging: false,
+    useCORS: true
+  }).then(canvas => {
+    const rect = element.getBoundingClientRect();
+
+    // Create a container for particles
+    const container = document.createElement('div');
+    container.classList.add('dust-container');
+    container.style.left = `${rect.left}px`;
+    container.style.top = `${rect.top}px`;
+    container.style.width = `${rect.width}px`;
+    container.style.height = `${rect.height}px`;
+    document.body.appendChild(container);
+
+    // Hide the original element
+    element.style.visibility = 'hidden';
+
+    // Create particles
+    const ctx = canvas.getContext('2d');
+    const width = canvas.width;
+    const height = canvas.height;
+    const pixelData = ctx.getImageData(0, 0, width, height).data;
+
+    // Reduction factor for performance (higher = fewer particles)
+    const reduction = 10;
+
+    const fragment = document.createDocumentFragment();
+
+    for (let x = 0; x < width; x += reduction) {
+      for (let y = 0; y < height; y += reduction) {
+        const i = (y * width + x) * 4;
+        // Check alpha to skip transparent pixels
+        if (pixelData[i + 3] > 0) {
+          const particle = document.createElement('div');
+          particle.classList.add('dust-particle');
+
+          // Position relative to container
+          particle.style.left = `${x}px`;
+          particle.style.top = `${y}px`;
+          particle.style.width = `${reduction}px`;
+          particle.style.height = `${reduction}px`;
+
+          // Color from pixel
+          particle.style.backgroundColor = `rgba(${pixelData[i]}, ${pixelData[i + 1]}, ${pixelData[i + 2]}, ${pixelData[i + 3] / 255})`;
+
+          // Random animation values
+          // Drift mostly up and right/left
+          const tx = (Math.random() - 0.5) * 200;
+          const ty = (Math.random() - 1) * 200;
+          const r = (Math.random() - 0.5) * 720;
+
+          particle.style.setProperty('--tx', `${tx}px`);
+          particle.style.setProperty('--ty', `${ty}px`);
+          particle.style.setProperty('--r', `${r}deg`);
+
+          // Random delay for organic feel
+          const delay = Math.random() * 0.3;
+          particle.style.animation = `disperse 1s cubic-bezier(0.25, 0.8, 0.25, 1) ${delay}s forwards`;
+
+          fragment.appendChild(particle);
+        }
+      }
+    }
+
+    container.appendChild(fragment);
+
+    // Cleanup
+    setTimeout(() => {
+      container.remove();
+      if (callback) callback();
+    }, 1500);
+  }).catch(err => {
+    console.error("Disintegration failed:", err);
+    // Fallback if html2canvas fails
+    if (callback) callback();
+  });
+}
