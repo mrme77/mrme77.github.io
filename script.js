@@ -149,6 +149,12 @@ document.getElementById("close-chat").addEventListener("click", () => {
   });
 });
 
+document.getElementById("chat-input").addEventListener("keypress", function (e) {
+  if (e.key === "Enter") {
+    sendChat();
+  }
+});
+
 function toggleChat() {
   if (chatWindow.style.display === "flex") {
     chatWindow.style.display = "none";
