@@ -72,9 +72,9 @@
         <li><a href="#" onclick="showTab('bio')">Bio <span class="cursor" id="cursor-bio">></span></a></li>
         <li><a href="#" onclick="showTab('blog')">Blog <span class="cursor" id="cursor-articles"
               style="display:none">></span></a></li>
-        <li><a href="#" onclick="showTab('contact-me')">Contact Me <span class="cursor" id="cursor-projects"
+        <li><a href="#" onclick="showTab('contact-me')">Contact Me <span class="cursor" id="cursor-contact-me"
               style="display:none">></span></a></li>
-        <li><a href="#" onclick="toggleChat()" id="chat-toggle">Chat <span id="cursor-chat" class="cursor"
+        <li><a href="#" onclick="showTab('projects')">Projects <span id="cursor-projects" class="cursor"
               style="display:none">></span></a></li>
       </ul>
     </nav>
@@ -258,6 +258,35 @@
 
 
 
+    </main>
+    <section id="projects" class="tab">
+      <div class="banner-container">
+        <div class="contact-grid">
+          <!-- Card 1: Personal Goals Assistant -->
+          <div class="retro-card"
+            onclick="window.open('https://www.pasqualesalomone.com/Personal-Goals-Assistant/', '_blank')">
+            <div class="card-icon">🎯</div>
+            <h3>Personal Goals Assistant</h3>
+            <p>Track and achieve your personal goals.</p>
+          </div>
+
+          <!-- Card 2: PULSE Social Engine -->
+          <div class="retro-card"
+            onclick="window.open('https://huggingface.co/spaces/mrme77/PULSE-PDFUploadToLinkedInSocialEngine', '_blank')">
+            <div class="card-icon">🚀</div>
+            <h3>PULSE Social Engine</h3>
+            <p>PDF Upload to LinkedIn Social Engine.</p>
+          </div>
+
+          <!-- Card 3: Maestro Resume Project -->
+          <div class="retro-card" onclick="window.open('https://maestroresumeprojectlive.vercel.app/', '_blank')">
+            <div class="card-icon">📄</div>
+            <h3>Maestro Resume Project</h3>
+            <p>Resume builder and project showcase.</p>
+          </div>
+        </div>
+      </div>
+    </section>
     </main>
   </div>
   <script src="script.js" defer></script>

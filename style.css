@@ -99,6 +99,14 @@ nav ul li a:hover {
   z-index: -1;
 }
 
+/* Vertically center the projects tab content */
+#projects.active {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 80vh;
+}
+
 h1 {
   border-bottom: 1px solid #33ff33;
   padding-bottom: 0.5rem;
