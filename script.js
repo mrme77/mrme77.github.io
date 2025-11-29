@@ -649,8 +649,8 @@ class ParticleNetwork {
       this.particles.push({
         x: Math.random() * this.canvas.width,
         y: Math.random() * this.canvas.height,
-        vx: (Math.random() - 0.5) * 0.5, // Velocity X
-        vy: (Math.random() - 0.5) * 0.5, // Velocity Y
+        vx: (Math.random() - 0.5) * 1.5, // Velocity X (increased from 0.5 to 1.5)
+        vy: (Math.random() - 0.5) * 1.5, // Velocity Y (increased from 0.5 to 1.5)
         radius: Math.random() * 2 + 1
       });
     }
