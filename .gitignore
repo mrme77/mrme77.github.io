@@ -9,3 +9,9 @@ __pycache__/
 *.swp
 .idea/
 .vscode/
+
+# Documentation and reference files (not for repo)
+CONVERSATION_LOGGING_SETUP.md
+TESTING_CHECKLIST.md
+backend-save-conversation-endpoint.js
+assets/DEPLOYMENT_STEPS.md
