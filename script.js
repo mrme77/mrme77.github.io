@@ -649,8 +649,8 @@ class ParticleNetwork {
       this.particles.push({
         x: Math.random() * this.canvas.width,
         y: Math.random() * this.canvas.height,
-        vx: (Math.random() - 0.5) * 1.5, // Velocity X (increased from 0.5 to 1.5)
-        vy: (Math.random() - 0.5) * 1.5, // Velocity Y (increased from 0.5 to 1.5)
+        vx: (Math.random() - 0.5) * 2.5, // Velocity X (testing faster speed)
+        vy: (Math.random() - 0.5) * 2.5, // Velocity Y (testing faster speed)
         radius: Math.random() * 2 + 1
       });
     }
@@ -672,8 +672,8 @@ class ParticleNetwork {
   }
 
   draw() {
-    // Clear canvas with transparent black
-    this.ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    // Less blur - faster fade for cleaner particles
+    this.ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
     // Update and draw particles
