@@ -265,8 +265,13 @@ function toggleContactForm() {
 // Close button for contact form
 document.getElementById("close-contact-form").addEventListener("click", () => {
   const contactForm = document.getElementById("contactForm");
-  contactForm.classList.remove("show");
-  setTimeout(() => contactForm.style.display = "none", 400);
+  disintegrate(contactForm, () => {
+    contactForm.classList.remove("show");
+    contactForm.style.display = "none";
+    contactForm.style.visibility = "visible"; // Reset for next time
+    contactForm.reset(); // Clear the form
+    charCount.textContent = "0 / 255"; // Reset character counter
+  });
 });
 
 // Old button listener removed
