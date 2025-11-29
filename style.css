@@ -2,24 +2,27 @@
 /* For small devices (phones) */
 @media (max-width: 600px) {
   body {
-    font-size: 14px;
+    font-size: 15px;
     padding: 0;
+    line-height: 1.7;
   }
 }
 
 /* For medium devices (tablets) */
 @media (min-width: 601px) and (max-width: 1024px) {
   body {
-    font-size: 16px;
+    font-size: 17px;
     padding: 0;
+    line-height: 1.7;
   }
 }
 
 /* For large devices (laptops/desktops) */
 @media (min-width: 1025px) {
   body {
-    font-size: 18px;
+    font-size: 19px;
     padding: 0;
+    line-height: 1.7;
   }
 }
 
@@ -59,10 +62,28 @@ nav ul li a {
   color: #33ff33;
   text-decoration: none;
   font-weight: bold;
+  transition: all 0.3s ease;
+  position: relative;
 }
 
 nav ul li a:hover {
-  text-decoration: underline;
+  color: #66ff66;
+  text-shadow: 0 0 8px rgba(51, 255, 51, 0.6);
+}
+
+nav ul li a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -3px;
+  left: 0;
+  background-color: #33ff33;
+  transition: width 0.3s ease;
+}
+
+nav ul li a:hover::after {
+  width: 100%;
 }
 
 .tab {
@@ -71,6 +92,18 @@ nav ul li a:hover {
 
 .tab.active {
   display: block;
+  animation: fadeIn 0.4s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Vertically center the contact tab content */
@@ -145,6 +178,7 @@ a {
   /* Full viewport width */
   margin: 0 auto 20px auto;
   overflow: hidden;
+  padding: 0 1rem 2rem 1rem;
 }
 
 
@@ -182,13 +216,19 @@ a {
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
 }
 
-/* Paragraph alignment */
+/* Paragraph alignment and spacing */
 #bio p,
 #articles p,
 #projects p,
 #github p,
 #linkedin p {
   text-align: justify;
+  margin-bottom: 1.5rem;
+  line-height: 1.7;
+}
+
+#bio p:last-child {
+  margin-bottom: 0;
 }
 
 #chatbot-icon {
@@ -337,21 +377,27 @@ a {
 #world-clocks {
   display: flex;
   justify-content: center;
-  gap: 2rem;
-  padding: 0.75rem 1rem;
+  gap: 1.5rem;
+  padding: 0.5rem 1rem;
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 1.2rem;
+  font-size: 0.85rem;
   color: #33ff33;
+  opacity: 0.7;
   background-color: rgba(0, 0, 0, 0.9);
-  border-top: 1px solid #33ff33;
-  border-bottom: 1px solid #33ff33;
+  border-top: 1px solid rgba(51, 255, 51, 0.3);
+  border-bottom: 1px solid rgba(51, 255, 51, 0.3);
   margin-bottom: 1rem;
+  transition: opacity 0.3s ease;
+}
+
+#world-clocks:hover {
+  opacity: 1;
 }
 
 #world-clocks div {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
 }
 
 #close-chat {
