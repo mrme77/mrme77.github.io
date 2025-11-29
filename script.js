@@ -136,6 +136,9 @@ function showTab(tabId) {
 const chatWindow = document.getElementById("chatbot-window");
 const chatbox = document.getElementById("chatbox");
 
+// --- Chat History State ---
+let chatHistory = [];
+
 // --- Contact form elements ---
 const messageBox = document.getElementById("message");
 const charCount = document.getElementById("charCount");
@@ -146,6 +149,7 @@ document.getElementById("close-chat").addEventListener("click", () => {
     chatbox.innerHTML = "";
     chatWindow.style.display = "none";
     chatWindow.style.visibility = "visible"; // Reset for next time
+    chatHistory = []; // Optional: Clear history on close? Or keep it? Let's keep it for now.
   });
 });
 
@@ -159,10 +163,23 @@ function toggleChat() {
   if (chatWindow.style.display === "flex") {
     chatWindow.style.display = "none";
   } else {
-    chatbox.innerHTML = "";
+    // Don't clear chatbox if we want to preserve state visually too, 
+    // but the original code cleared it. Let's keep the visual clear but maybe restore history?
+    // For now, let's just show the window.
+    // chatbox.innerHTML = ""; // Removed clearing to keep visual history if just toggling
     chatWindow.style.display = "flex";
-    chatWindow.style.visibility = "visible"; // Ensure visible if previously disintegrated
+    chatWindow.style.visibility = "visible";
     chatWindow.style.opacity = "1";
+
+    // If chatbox is empty but we have history, maybe re-render? 
+    // For simplicity, we assume the user just minimized it.
+    if (chatbox.innerHTML === "" && chatHistory.length > 0) {
+      chatHistory.forEach(msg => {
+        const className = msg.role === 'user' ? 'user-message' : 'bot-message';
+        const sender = msg.role === 'user' ? 'User' : 'Pasquale-AI';
+        chatbox.innerHTML += `<div class="chat-message ${className}"><strong>${sender}:</strong> ${msg.content}</div>`;
+      });
+    }
   }
 }
 
@@ -175,19 +192,37 @@ async function sendChat() {
   if (message.length > 150) { alert("Your message is too long. Please keep it under 150 characters."); return; }
   if (containsProfanity(message)) { alert("Your message contains inappropriate language."); return; }
 
+  // Add user message to UI
   chatbox.innerHTML += `<div class="chat-message user-message"><strong>User:</strong> ${message}</div>`;
   input.value = '';
-  //"https://mrme77githubio-backend.vercel.app/chat",
+  chatbox.scrollTop = chatbox.scrollHeight;
+
   try {
     // Production URL
     const response = await fetch("https://mrme77githubio-backend.vercel.app/chat", {
       method: "POST",
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt: message })
+      body: JSON.stringify({
+        prompt: message,
+        history: chatHistory // Send previous history
+      })
     });
 
     const data = await response.json();
-    chatbox.innerHTML += `<div class="chat-message bot-message"><strong>Pasquale-AI:</strong> ${data.reply || "Sorry, no response received."}</div>`;
+    const botReply = data.reply || "Sorry, no response received.";
+
+    // Add bot message to UI
+    chatbox.innerHTML += `<div class="chat-message bot-message"><strong>Pasquale-AI:</strong> ${botReply}</div>`;
+
+    // Update History
+    chatHistory.push({ role: "user", content: message });
+    chatHistory.push({ role: "assistant", content: botReply });
+
+    // Limit history to last 10 messages (5 turns)
+    if (chatHistory.length > 10) {
+      chatHistory = chatHistory.slice(chatHistory.length - 10);
+    }
+
   } catch (err) {
     chatbox.innerHTML += `<div class="chat-message bot-message"><strong>Pasquale-AI:</strong> Error connecting to server.</div>`;
   }
