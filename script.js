@@ -122,7 +122,11 @@ setInterval(updateClocks, 1000);
 updateClocks();
 
 // --- Tab switching ---
-let particleNetworkInstance = null;
+let particleNetworkInstances = {
+  'contact-me': null,
+  'blog': null,
+  'projects': null
+};
 
 function showTab(tabId) {
   console.log('showTab called with:', tabId);
@@ -137,15 +141,18 @@ function showTab(tabId) {
   const activeCursor = document.getElementById('cursor-' + tabId);
   if (activeCursor) activeCursor.style.display = 'inline-block';
 
-  // Initialize Particle Network when switching to contact tab
-  if (tabId === 'contact-me') {
-    console.log('Contact tab activated, particleNetworkInstance exists?', !!particleNetworkInstance);
-    if (!particleNetworkInstance) {
-      console.log('Initializing Particle Network...');
-      setTimeout(() => {
-        particleNetworkInstance = new ParticleNetwork('matrix-canvas');
-      }, 100);
-    }
+  // Initialize Particle Network for sections that need it
+  const canvasMap = {
+    'contact-me': 'matrix-canvas',
+    'blog': 'blog-canvas',
+    'projects': 'projects-canvas'
+  };
+
+  if (canvasMap[tabId] && !particleNetworkInstances[tabId]) {
+    console.log(`Initializing Particle Network for ${tabId}...`);
+    setTimeout(() => {
+      particleNetworkInstances[tabId] = new ParticleNetwork(canvasMap[tabId]);
+    }, 100);
   }
 }
 

@@ -119,8 +119,10 @@ nav ul li a:hover::after {
   background-color: #000;
 }
 
-/* Matrix canvas background */
-#matrix-canvas {
+/* Canvas backgrounds for all sections */
+#matrix-canvas,
+#blog-canvas,
+#projects-canvas {
   position: absolute;
   top: 0;
   left: 0;
@@ -133,8 +135,17 @@ nav ul li a:hover::after {
   background-color: #000;
 }
 
-#contact-me.active #matrix-canvas {
+#contact-me.active #matrix-canvas,
+#blog.active #blog-canvas,
+#projects.active #projects-canvas {
   display: block;
+}
+
+/* Blog and Projects section styling */
+#blog,
+#projects {
+  position: relative;
+  min-height: 80vh;
 }
 
 /* Vertically center the projects tab content */
@@ -142,7 +153,7 @@ nav ul li a:hover::after {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: 80vh;
+  background-color: #000;
 }
 
 h1 {
