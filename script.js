@@ -1,3 +1,5 @@
+console.log('script.js loaded successfully!');
+
 // --- Profanity list & function ---
 const PROFANITY_LIST = ["badword1", "badword2", "badword3"];
 
@@ -120,7 +122,11 @@ setInterval(updateClocks, 1000);
 updateClocks();
 
 // --- Tab switching ---
+let particleNetworkInstance = null;
+
 function showTab(tabId) {
+  console.log('showTab called with:', tabId);
+
   const tabs = document.querySelectorAll('.tab');
   tabs.forEach(tab => tab.classList.remove('active'));
   document.getElementById(tabId).classList.add('active');
@@ -130,6 +136,17 @@ function showTab(tabId) {
 
   const activeCursor = document.getElementById('cursor-' + tabId);
   if (activeCursor) activeCursor.style.display = 'inline-block';
+
+  // Initialize Particle Network when switching to contact tab
+  if (tabId === 'contact-me') {
+    console.log('Contact tab activated, particleNetworkInstance exists?', !!particleNetworkInstance);
+    if (!particleNetworkInstance) {
+      console.log('Initializing Particle Network...');
+      setTimeout(() => {
+        particleNetworkInstance = new ParticleNetwork('matrix-canvas');
+      }, 100);
+    }
+  }
 }
 
 
@@ -434,4 +451,116 @@ function disintegrate(element, callback) {
     // Fallback if html2canvas fails
     if (callback) callback();
   });
+}
+
+// --- Particle Network Effect for Contact Section ---
+class ParticleNetwork {
+  constructor(canvasId) {
+    this.canvas = document.getElementById(canvasId);
+    if (!this.canvas) {
+      console.error('Canvas not found:', canvasId);
+      return;
+    }
+
+    this.ctx = this.canvas.getContext('2d');
+    this.resizeCanvas();
+
+    this.particles = [];
+    this.particleCount = 50; // Number of particles
+    this.connectionDistance = 150; // Max distance for connections
+    this.mouse = { x: null, y: null, radius: 100 };
+
+    // Create particles
+    this.createParticles();
+
+    console.log('Particle Network initialized:', {
+      width: this.canvas.width,
+      height: this.canvas.height,
+      particles: this.particleCount
+    });
+
+    // Bind resize handler
+    window.addEventListener('resize', () => this.resizeCanvas());
+
+    // Start animation
+    this.animate();
+  }
+
+  createParticles() {
+    this.particles = [];
+    for (let i = 0; i < this.particleCount; i++) {
+      this.particles.push({
+        x: Math.random() * this.canvas.width,
+        y: Math.random() * this.canvas.height,
+        vx: (Math.random() - 0.5) * 0.5, // Velocity X
+        vy: (Math.random() - 0.5) * 0.5, // Velocity Y
+        radius: Math.random() * 2 + 1
+      });
+    }
+  }
+
+  resizeCanvas() {
+    if (!this.canvas) return;
+    const parent = this.canvas.parentElement;
+    this.canvas.width = parent.offsetWidth;
+    this.canvas.height = parent.offsetHeight;
+
+    console.log('Canvas resized:', {
+      width: this.canvas.width,
+      height: this.canvas.height
+    });
+
+    // Recreate particles on resize
+    this.createParticles();
+  }
+
+  draw() {
+    // Clear canvas with transparent black
+    this.ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+    // Update and draw particles
+    this.particles.forEach((particle, index) => {
+      // Update position
+      particle.x += particle.vx;
+      particle.y += particle.vy;
+
+      // Bounce off edges
+      if (particle.x < 0 || particle.x > this.canvas.width) particle.vx *= -1;
+      if (particle.y < 0 || particle.y > this.canvas.height) particle.vy *= -1;
+
+      // Keep within bounds
+      particle.x = Math.max(0, Math.min(this.canvas.width, particle.x));
+      particle.y = Math.max(0, Math.min(this.canvas.height, particle.y));
+
+      // Draw particle
+      this.ctx.fillStyle = '#33ff33';
+      this.ctx.beginPath();
+      this.ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+      this.ctx.fill();
+
+      // Draw connections to nearby particles
+      for (let j = index + 1; j < this.particles.length; j++) {
+        const other = this.particles[j];
+        const dx = particle.x - other.x;
+        const dy = particle.y - other.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < this.connectionDistance) {
+          const opacity = 1 - (distance / this.connectionDistance);
+          this.ctx.strokeStyle = `rgba(51, 255, 51, ${opacity * 0.5})`;
+          this.ctx.lineWidth = 0.5;
+          this.ctx.beginPath();
+          this.ctx.moveTo(particle.x, particle.y);
+          this.ctx.lineTo(other.x, other.y);
+          this.ctx.stroke();
+        }
+      }
+    });
+  }
+
+  animate() {
+    this.draw();
+    requestAnimationFrame(() => this.animate());
+  }
 }
