@@ -164,17 +164,127 @@ const chatbox = document.getElementById("chatbox");
 // --- Chat History State ---
 let chatHistory = [];
 
+// --- Conversation Logging State ---
+let conversationSession = {
+  sessionId: null,
+  userLocation: null,
+  messages: [],
+  startTime: null
+};
+
+// Generate a random session ID
+function generateSessionId() {
+  return 'sess_' + Date.now() + '_' + Math.random().toString(36).substring(2, 11);
+}
+
+// Get anonymized location data
+async function getAnonymizedLocation() {
+  try {
+    const response = await fetch('https://ipapi.co/json/');
+    const data = await response.json();
+
+    // Only store city, region, country - NO IP address
+    return {
+      city: data.city || 'Unknown',
+      region: data.region || 'Unknown',
+      country: data.country_name || 'Unknown',
+      timezone: data.timezone || 'Unknown'
+    };
+  } catch (err) {
+    // Silent failure - return unknown location
+    return {
+      city: 'Unknown',
+      region: 'Unknown',
+      country: 'Unknown',
+      timezone: 'Unknown'
+    };
+  }
+}
+
+// Initialize conversation session
+async function initConversationSession() {
+  if (!conversationSession.sessionId) {
+    conversationSession.sessionId = generateSessionId();
+    conversationSession.startTime = new Date().toISOString();
+    conversationSession.userLocation = await getAnonymizedLocation();
+  }
+}
+
+// Strip PII from text (email addresses, phone numbers, names in common patterns)
+function stripPII(text) {
+  if (!text) return text;
+
+  let cleaned = text;
+
+  // Remove email addresses
+  cleaned = cleaned.replace(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g, '[EMAIL_REMOVED]');
+
+  // Remove phone numbers (various formats)
+  cleaned = cleaned.replace(/(\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}/g, '[PHONE_REMOVED]');
+
+  // Remove SSN-like patterns
+  cleaned = cleaned.replace(/\d{3}-\d{2}-\d{4}/g, '[SSN_REMOVED]');
+
+  // Remove credit card-like patterns
+  cleaned = cleaned.replace(/\d{4}[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4}/g, '[CC_REMOVED]');
+
+  return cleaned;
+}
+
+// Save conversation to backend
+async function saveConversation() {
+  // Don't save if no messages
+  if (conversationSession.messages.length === 0) {
+    return;
+  }
+
+  try {
+    const conversationData = {
+      sessionId: conversationSession.sessionId,
+      location: conversationSession.userLocation,
+      startTime: conversationSession.startTime,
+      endTime: new Date().toISOString(),
+      messages: conversationSession.messages.map(msg => ({
+        role: msg.role,
+        content: stripPII(msg.content), // Strip PII from message content
+        timestamp: msg.timestamp
+      }))
+    };
+
+    // Send to backend - silent failure if it doesn't work
+    await fetch('https://mrme77githubio-backend.vercel.app/save-conversation', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(conversationData)
+    });
+  } catch (err) {
+    // Silent failure - don't alert user, just log to console
+    console.log('Conversation save failed silently:', err);
+  }
+}
+
 // --- Contact form elements ---
 const messageBox = document.getElementById("message");
 const charCount = document.getElementById("charCount");
 const contactForm = document.getElementById("contactForm");
 
-document.getElementById("close-chat").addEventListener("click", () => {
+document.getElementById("close-chat").addEventListener("click", async () => {
+  // Save conversation before closing
+  await saveConversation();
+
   disintegrate(chatWindow, () => {
     chatbox.innerHTML = "";
     chatWindow.style.display = "none";
     chatWindow.style.visibility = "visible"; // Reset for next time
-    chatHistory = []; // Optional: Clear history on close? Or keep it? Let's keep it for now.
+    chatHistory = []; // Clear history on close
+
+    // Reset conversation session for next chat
+    conversationSession = {
+      sessionId: null,
+      userLocation: null,
+      messages: [],
+      startTime: null
+    };
   });
 });
 
@@ -184,11 +294,14 @@ document.getElementById("chat-input").addEventListener("keypress", function (e) 
   }
 });
 
-function toggleChat() {
+async function toggleChat() {
   if (chatWindow.style.display === "flex") {
     chatWindow.style.display = "none";
   } else {
-    // Don't clear chatbox if we want to preserve state visually too, 
+    // Initialize conversation session when chat is opened
+    await initConversationSession();
+
+    // Don't clear chatbox if we want to preserve state visually too,
     // but the original code cleared it. Let's keep the visual clear but maybe restore history?
     // For now, let's just show the window.
     // chatbox.innerHTML = ""; // Removed clearing to keep visual history if just toggling
@@ -196,7 +309,7 @@ function toggleChat() {
     chatWindow.style.visibility = "visible";
     chatWindow.style.opacity = "1";
 
-    // If chatbox is empty but we have history, maybe re-render? 
+    // If chatbox is empty but we have history, maybe re-render?
     // For simplicity, we assume the user just minimized it.
     if (chatbox.innerHTML === "" && chatHistory.length > 0) {
       chatHistory.forEach(msg => {
@@ -217,10 +330,20 @@ async function sendChat() {
   if (message.length > 150) { alert("Your message is too long. Please keep it under 150 characters."); return; }
   if (containsProfanity(message)) { alert("Your message contains inappropriate language."); return; }
 
+  // Ensure session is initialized
+  await initConversationSession();
+
   // Add user message to UI
   chatbox.innerHTML += `<div class="chat-message user-message"><strong>User:</strong> ${message}</div>`;
   input.value = '';
   chatbox.scrollTop = chatbox.scrollHeight;
+
+  // Track user message in conversation session
+  conversationSession.messages.push({
+    role: "user",
+    content: message,
+    timestamp: new Date().toISOString()
+  });
 
   try {
     // Production URL
@@ -239,6 +362,13 @@ async function sendChat() {
     // Add bot message to UI
     chatbox.innerHTML += `<div class="chat-message bot-message"><strong>Maestro-AI:</strong> ${botReply}</div>`;
 
+    // Track bot message in conversation session
+    conversationSession.messages.push({
+      role: "assistant",
+      content: botReply,
+      timestamp: new Date().toISOString()
+    });
+
     // Update History
     chatHistory.push({ role: "user", content: message });
     chatHistory.push({ role: "assistant", content: botReply });
@@ -249,7 +379,15 @@ async function sendChat() {
     }
 
   } catch (err) {
-    chatbox.innerHTML += `<div class="chat-message bot-message"><strong>Maestro-AI:</strong> Error connecting to server.</div>`;
+    const errorMsg = "Error connecting to server.";
+    chatbox.innerHTML += `<div class="chat-message bot-message"><strong>Maestro-AI:</strong> ${errorMsg}</div>`;
+
+    // Track error message too
+    conversationSession.messages.push({
+      role: "assistant",
+      content: errorMsg,
+      timestamp: new Date().toISOString()
+    });
   }
 
   chatbox.scrollTop = chatbox.scrollHeight;
