@@ -176,7 +176,7 @@ function toggleChat() {
     if (chatbox.innerHTML === "" && chatHistory.length > 0) {
       chatHistory.forEach(msg => {
         const className = msg.role === 'user' ? 'user-message' : 'bot-message';
-        const sender = msg.role === 'user' ? 'User' : 'Pasquale-AI';
+        const sender = msg.role === 'user' ? 'User' : 'Maestro-AI';
         chatbox.innerHTML += `<div class="chat-message ${className}"><strong>${sender}:</strong> ${msg.content}</div>`;
       });
     }
@@ -212,7 +212,7 @@ async function sendChat() {
     const botReply = data.reply || "Sorry, no response received.";
 
     // Add bot message to UI
-    chatbox.innerHTML += `<div class="chat-message bot-message"><strong>Pasquale-AI:</strong> ${botReply}</div>`;
+    chatbox.innerHTML += `<div class="chat-message bot-message"><strong>Maestro-AI:</strong> ${botReply}</div>`;
 
     // Update History
     chatHistory.push({ role: "user", content: message });
@@ -224,7 +224,7 @@ async function sendChat() {
     }
 
   } catch (err) {
-    chatbox.innerHTML += `<div class="chat-message bot-message"><strong>Pasquale-AI:</strong> Error connecting to server.</div>`;
+    chatbox.innerHTML += `<div class="chat-message bot-message"><strong>Maestro-AI:</strong> Error connecting to server.</div>`;
   }
 
   chatbox.scrollTop = chatbox.scrollHeight;
