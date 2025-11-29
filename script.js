@@ -262,6 +262,13 @@ function toggleContactForm() {
   }
 }
 
+// Close button for contact form
+document.getElementById("close-contact-form").addEventListener("click", () => {
+  const contactForm = document.getElementById("contactForm");
+  contactForm.classList.remove("show");
+  setTimeout(() => contactForm.style.display = "none", 400);
+});
+
 // Old button listener removed
 // showFormBtn.addEventListener("click", ...);
 

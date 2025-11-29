@@ -405,7 +405,8 @@ a {
   gap: 0.4rem;
 }
 
-#close-chat {
+#close-chat,
+#close-contact-form {
   background: #ff3333;
   color: white;
   border: none;
@@ -414,9 +415,11 @@ a {
   font-size: 1rem;
   font-weight: bold;
   border-radius: 4px;
+  transition: background 0.2s ease;
 }
 
-#close-chat:hover {
+#close-chat:hover,
+#close-contact-form:hover {
   background: #ff5555;
 }
 
