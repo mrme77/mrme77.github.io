@@ -132,6 +132,7 @@ function showTab(tabId) {
   if (activeCursor) activeCursor.style.display = 'inline-block';
 }
 
+
 // --- Chat window toggle & close ---
 const chatWindow = document.getElementById("chatbot-window");
 const chatbox = document.getElementById("chatbox");
