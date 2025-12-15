@@ -123,9 +123,7 @@ updateClocks();
 
 // --- Tab switching ---
 let particleNetworkInstances = {
-  'contact-me': null,
-  'blog': null,
-  'projects': null
+  'contact-me': null
 };
 
 function showTab(tabId) {
@@ -141,11 +139,9 @@ function showTab(tabId) {
   const activeCursor = document.getElementById('cursor-' + tabId);
   if (activeCursor) activeCursor.style.display = 'inline-block';
 
-  // Initialize Particle Network for sections that need it
+  // Initialize Particle Network ONLY for contact-me section
   const canvasMap = {
-    'contact-me': 'matrix-canvas',
-    'blog': 'blog-canvas',
-    'projects': 'projects-canvas'
+    'contact-me': 'matrix-canvas'
   };
 
   if (canvasMap[tabId] && !particleNetworkInstances[tabId]) {
@@ -461,71 +457,6 @@ contactForm.addEventListener("submit", async (e) => {
   }
 });
 
-// function updateClocks() {
-//   const now = new Date();
-//   const options = {
-//     hour: '2-digit',
-//     minute: '2-digit',
-//     second: '2-digit',
-//     hour12: false,
-//   };
-//   document.getElementById('clock-pt').textContent =
-//     new Intl.DateTimeFormat('en-US', { ...options, timeZone: 'America/Los_Angeles' }).format(now);
-
-//   document.getElementById('clock-ct').textContent =
-//     new Intl.DateTimeFormat('en-US', { ...options, timeZone: 'America/Chicago' }).format(now);
-
-//   document.getElementById('clock-et').textContent =
-//     new Intl.DateTimeFormat('en-US', { ...options, timeZone: 'America/New_York' }).format(now);
-
-//   document.getElementById('clock-rome').textContent =
-//     new Intl.DateTimeFormat('en-US', { ...options, timeZone: 'Europe/Rome' }).format(now);
-
-//   }
-
-// setInterval(updateClocks, 1000);
-// updateClocks();
-
-// function showTab(tabId) {
-//   // Show the correct tab content
-//   const tabs = document.querySelectorAll('.tab');
-//   tabs.forEach(tab => tab.classList.remove('active'));
-//   document.getElementById(tabId).classList.add('active');
-
-//   // Move the blinking cursor to the selected tab
-//   const cursors = document.querySelectorAll('.cursor');
-//   cursors.forEach(c => c.style.display = 'none');
-
-//   const activeCursor = document.getElementById('cursor-' + tabId);
-//   if (activeCursor) activeCursor.style.display = 'inline-block';
-// }
-// function toggleChat() {
-//   const chatWindow = document.getElementById("chatbot-window");
-//   chatWindow.style.display = chatWindow.style.display === "flex" ? "none" : "flex";
-// }
-
-// async function sendChat() {
-//   const input = document.getElementById("chat-input");
-//   const message = input.value.trim();
-//   if (!message) return;
-
-//   const chatbox = document.getElementById("chatbox");
-//   chatbox.innerHTML += `<div><strong>You:</strong> ${message}</div>`;
-//   input.value = '';
-
-//   const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-//     method: "POST",
-//     headers: {
-//       'Authorization': 'Bearer YOUR_OPENROUTER_API_KEY',
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify({
-//       model: "openai/gpt-3.5-turbo",
-//       messages: [{ role: "user", content: message }]
-//     })
-//   });
-
-//   const data = await response.json();
 // --- Disintegration Effect ---
 function disintegrate(element, callback) {
   // Use html2canvas to capture the element
@@ -649,8 +580,8 @@ class ParticleNetwork {
       this.particles.push({
         x: Math.random() * this.canvas.width,
         y: Math.random() * this.canvas.height,
-        vx: (Math.random() - 0.5) * 1.8, // Velocity X (slowed down)
-        vy: (Math.random() - 0.5) * 1.8, // Velocity Y (slowed down)
+        vx: (Math.random() - 0.5) * 0.5, // Velocity X (slowed down further)
+        vy: (Math.random() - 0.5) * 0.5, // Velocity Y (slowed down further)
         radius: Math.random() * 2 + 1
       });
     }
@@ -659,12 +590,16 @@ class ParticleNetwork {
   resizeCanvas() {
     if (!this.canvas) return;
     const parent = this.canvas.parentElement;
-    this.canvas.width = parent.offsetWidth;
-    this.canvas.height = parent.offsetHeight;
+
+    // Ensure canvas fills the entire parent section
+    this.canvas.width = parent.offsetWidth || window.innerWidth;
+    this.canvas.height = parent.offsetHeight || window.innerHeight;
 
     console.log('Canvas resized:', {
       width: this.canvas.width,
-      height: this.canvas.height
+      height: this.canvas.height,
+      parentWidth: parent.offsetWidth,
+      parentHeight: parent.offsetHeight
     });
 
     // Recreate particles on resize
@@ -691,7 +626,7 @@ class ParticleNetwork {
       particle.y = Math.max(0, Math.min(this.canvas.height, particle.y));
 
       // Draw particle
-      this.ctx.fillStyle = '#33ff33';
+      this.ctx.fillStyle = '#e0e0e0';
       this.ctx.beginPath();
       this.ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
       this.ctx.fill();
@@ -705,7 +640,7 @@ class ParticleNetwork {
 
         if (distance < this.connectionDistance) {
           const opacity = 1 - (distance / this.connectionDistance);
-          this.ctx.strokeStyle = `rgba(51, 255, 51, ${opacity * 0.5})`;
+          this.ctx.strokeStyle = `rgba(224, 224, 224, ${opacity * 0.5})`;
           this.ctx.lineWidth = 0.5;
           this.ctx.beginPath();
           this.ctx.moveTo(particle.x, particle.y);
