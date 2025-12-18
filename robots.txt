@@ -1,0 +1,10 @@
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: *
+Disallow: /
+
+Sitemap: https://www.pasqualesalomone.com/sitemap.xml
