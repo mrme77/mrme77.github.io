@@ -209,8 +209,8 @@ a {
   width: 100%;
   /* Force full width */
   max-width: 100%;
-  height: 296px;
-  /* Increased by ~1 inch (96px) */
+  height: 250px;
+  /* Slightly increased height */
   object-fit: cover;
   /* Fill and crop to fit container */
   border-radius: 0;
