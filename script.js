@@ -656,3 +656,89 @@ class ParticleNetwork {
     requestAnimationFrame(() => this.animate());
   }
 }
+
+
+// --- Generic Pagination Logic ---
+function setupPagination(listId, controlsId, itemsPerPage = 3) {
+  const listContainer = document.getElementById(listId);
+  const controlsContainer = document.getElementById(controlsId);
+
+  if (!listContainer || !controlsContainer) return;
+
+  const items = Array.from(listContainer.getElementsByClassName('blog-entry'));
+  const totalPages = Math.ceil(items.length / itemsPerPage);
+  let currentPage = 1;
+
+  function showPage(page) {
+    if (page < 1 || page > totalPages) return;
+    currentPage = page;
+
+    // Calculate range
+    const start = (page - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+
+    // Show/Hide items
+    items.forEach((item, index) => {
+      if (index >= start && index < end) {
+        item.style.display = 'flex'; // Use flex as per CSS
+      } else {
+        item.style.display = 'none';
+      }
+    });
+
+    // Update active button
+    updateControls();
+  }
+
+  function updateControls() {
+    controlsContainer.innerHTML = '';
+
+    // Previous Button
+    if (totalPages > 1) {
+      const prevBtn = document.createElement('button');
+      prevBtn.textContent = '<';
+      prevBtn.className = 'pagination-btn';
+      if (currentPage === 1) prevBtn.disabled = true;
+      prevBtn.onclick = () => showPage(currentPage - 1);
+      controlsContainer.appendChild(prevBtn);
+    }
+
+    // Page Numbers
+    for (let i = 1; i <= totalPages; i++) {
+      const btn = document.createElement('button');
+      btn.textContent = i;
+      btn.className = 'pagination-btn';
+      if (i === currentPage) btn.classList.add('active');
+      btn.onclick = () => showPage(i);
+      controlsContainer.appendChild(btn);
+    }
+
+    // Next Button
+    if (totalPages > 1) {
+      const nextBtn = document.createElement('button');
+      nextBtn.textContent = '>';
+      nextBtn.className = 'pagination-btn';
+      if (currentPage === totalPages) nextBtn.disabled = true;
+      nextBtn.onclick = () => showPage(currentPage + 1);
+      controlsContainer.appendChild(nextBtn);
+    }
+  }
+
+  // Initial render
+  if (items.length > 0) {
+    showPage(1);
+  }
+}
+
+// Initialize pagination for both sections
+function initPaginations() {
+  setupPagination('project-list', 'pagination-controls', 3);
+  setupPagination('medium-list', 'medium-pagination-controls', 3);
+}
+
+document.addEventListener('DOMContentLoaded', initPaginations);
+// Hot module replacement support
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  initPaginations();
+}
+

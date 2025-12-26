@@ -722,3 +722,36 @@ a {
     /* Always visible on mobile */
   }
 }
+
+/* Pagination Controls */
+#pagination-controls,
+#medium-pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  padding-bottom: 2rem;
+}
+
+.pagination-btn {
+  background-color: #121212;
+  color: #e0e0e0;
+  border: 1px solid #e0e0e0;
+  padding: 8px 12px;
+  font-family: 'IBM Plex Mono', monospace;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.pagination-btn:hover {
+  background-color: rgba(224, 224, 224, 0.1);
+  box-shadow: 0 0 5px rgba(224, 224, 224, 0.3);
+}
+
+.pagination-btn.active {
+  background-color: #e0e0e0;
+  color: #121212;
+  font-weight: bold;
+}
