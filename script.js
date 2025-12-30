@@ -645,5 +645,83 @@ document.addEventListener('DOMContentLoaded', initPaginations);
 // Hot module replacement support
 if (document.readyState === 'complete' || document.readyState === 'interactive') {
   initPaginations();
+  startFloatingAlien();
+} else {
+  // If we hook into DOMContentLoaded elsewhere, ensure this is called too
+  document.addEventListener('DOMContentLoaded', startFloatingAlien);
 }
 
+// --- Floating Alien Logic ---
+function startFloatingAlien() {
+  const icon = document.getElementById('chatbot-icon');
+  const chatWindow = document.getElementById("chatbot-window");
+
+  if (!icon) return;
+
+  let floatInterval;
+  let isHovering = false;
+
+  // Function to move the alien to a random position
+  function moveAlien() {
+    // If chat is open or user is hovering, don't move
+    if (isHovering || (chatWindow && chatWindow.style.display === 'flex')) return;
+
+    const pad = 25; // padding from edges
+    const iconWidth = icon.offsetWidth || 50;
+    const iconHeight = icon.offsetHeight || 50;
+
+    // Bounds
+    const maxX = window.innerWidth - iconWidth - pad;
+    const maxY = window.innerHeight - iconHeight - pad;
+
+    // Random coord within safe bounds
+    const newX = Math.max(pad, Math.floor(Math.random() * maxX));
+    const newY = Math.max(pad, Math.floor(Math.random() * maxY));
+
+    icon.style.left = `${newX}px`;
+    icon.style.top = `${newY}px`;
+    // Ensure bottom/right are auto so left/top take precedence
+    icon.style.bottom = 'auto';
+    icon.style.right = 'auto';
+  }
+
+  // Initialize position from CSS (bottom-right) to JS (top-left absolute)
+  // This allows us to transition smoothly from the initial CSS position
+  const rect = icon.getBoundingClientRect();
+  icon.style.left = `${rect.left}px`;
+  icon.style.top = `${rect.top}px`;
+  icon.style.bottom = 'auto';
+  icon.style.right = 'auto';
+
+  // Start the loop
+  // First move after a delay to let user see it in the corner initially
+  setTimeout(() => {
+    moveAlien(); // First move
+    // Set interval for subsequent moves (4s matches CSS transition)
+    floatInterval = setInterval(moveAlien, 5000);
+  }, 2000);
+
+  // Interaction handlers
+  icon.addEventListener('mouseenter', () => {
+    isHovering = true;
+    // Scale up slightly to indicate interactivity
+    icon.style.transform = "scale(1.1)";
+  });
+
+  icon.addEventListener('mouseleave', () => {
+    isHovering = false;
+    icon.style.transform = "scale(1)";
+    // Optionally resume immediately or just wait for next tick
+  });
+
+  // Handle window resize to keep alien on screen
+  window.addEventListener('resize', () => {
+    const r = icon.getBoundingClientRect();
+    if (r.right > window.innerWidth) {
+      icon.style.left = `${window.innerWidth - r.width - 25}px`;
+    }
+    if (r.bottom > window.innerHeight) {
+      icon.style.top = `${window.innerHeight - r.height - 25}px`;
+    }
+  });
+}
