@@ -232,10 +232,7 @@ a {
 
 /* Paragraph alignment and spacing */
 #bio p,
-#articles p,
-#projects p,
-#github p,
-#linkedin p {
+#projects p {
   text-align: justify;
   margin-bottom: 1.5rem;
   line-height: 1.7;

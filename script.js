@@ -202,9 +202,6 @@ async function toggleChat() {
     // Initialize conversation session when chat is opened
     await initConversationSession();
 
-    // Don't clear chatbox if we want to preserve state visually too,
-    // but the original code cleared it. Let's keep the visual clear but maybe restore history?
-    // For now, let's just show the window.
     // chatbox.innerHTML = ""; // Removed clearing to keep visual history if just toggling
     chatWindow.style.display = "flex";
     chatWindow.style.visibility = "visible";
@@ -320,8 +317,7 @@ document.getElementById("close-contact-form").addEventListener("click", () => {
   });
 });
 
-// Old button listener removed
-// showFormBtn.addEventListener("click", ...);
+
 
 // Character counter
 if (messageBox) {
@@ -352,7 +348,6 @@ contactForm.addEventListener("submit", async (e) => {
       contactForm.reset();
       charCount.textContent = "0 / 255";
       contactForm.style.display = "none";
-      // showFormBtn.style.display = "inline-block"; // Button removed
     } else {
       alert("Error sending message. Please try again.");
     }
