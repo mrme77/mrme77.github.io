@@ -244,8 +244,9 @@ a {
 
 #chatbot-icon {
   position: fixed;
-  bottom: 25px;
+  top: 25px;
   right: 25px;
+  bottom: auto;
   background: #e0e0e0;
   color: #121212;
   font-size: 24px;
@@ -257,15 +258,32 @@ a {
   cursor: pointer;
   z-index: 1000;
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-  transition: all 4s ease-in-out;
-  /* Smooth floating movement */
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(224, 224, 224, 0.7);
+  }
+
+  70% {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 10px rgba(224, 224, 224, 0);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(224, 224, 224, 0);
+  }
 }
 
 /* Chatbot Window */
 #chatbot-window {
   position: fixed;
-  bottom: 90px;
+  top: 90px;
   right: 25px;
+  bottom: auto;
   width: 400px;
   /* Increased width */
   max-height: 550px;
