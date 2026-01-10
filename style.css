@@ -185,7 +185,6 @@ nav ul li a:hover::after {
 #blog.active,
 #projects.active {
   display: block;
-  background-color: #121212;
 }
 
 h1 {
