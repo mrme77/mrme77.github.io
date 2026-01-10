@@ -232,92 +232,63 @@
 
 
       <section id="blog" class="tab">
-        <div id="medium-list" class="blog-list">
-          <!-- Blog Entry 1 -->
-          <div class="blog-entry"
-            onclick="window.open('https://medium.com/@psalomone33/beyond-the-hype-running-large-language-models-locally-to-solve-real-problems-02e806430f04', '_blank')">
-            <div class="blog-date">2025-12-27</div>
-            <div class="blog-content">
-              <h3 class="blog-title">Beyond the Hype: Running Large Language Models Locally to Solve Real Problems</h3>
-              <p class="blog-summary">The article argues that with modern open-weight models and local hosting tools
-                like Ollama, individuals can now run large language and multimodal models on personal hardware to solve
-                practical problems—such as organizing photos—privately and effectively without relying on cloud
-                services.</p>
-              <div class="blog-tags">
-                <span class="tag">[AI]</span> <span class="tag">[LLM]</span>
-              </div>
+        <div id="journal-container">
+          <div id="journal-wrapper">
+            <button id="journal-prev" class="nav-arrow left">&lt;</button>
+            <div id="journal-book">
+              <!-- Pages will be injected by JS -->
             </div>
-            <div class="blog-action">&gt; EXECUTE</div>
+            <button id="journal-next" class="nav-arrow right">&gt;</button>
+          </div>
+        </div>
+        <!-- Hidden Data Source for Blog Entries -->
+        <div id="blog-data-source" style="display: none;">
+          <!-- Blog Entry 1 -->
+          <div class="blog-entry-data"
+            data-url="https://medium.com/@psalomone33/beyond-the-hype-running-large-language-models-locally-to-solve-real-problems-02e806430f04"
+            data-date="2025-12-27" data-tags="[AI], [LLM]">
+            <h3>Beyond the Hype: Running Large Language Models Locally to Solve Real Problems</h3>
+            <p>The article argues that with modern open-weight models and local hosting tools like Ollama, individuals
+              can now run large language and multimodal models on personal hardware to solve practical problems—such as
+              organizing photos—privately and effectively without relying on cloud services.</p>
           </div>
 
           <!-- Blog Entry 2 -->
-          <div class="blog-entry"
-            onclick="window.open('https://medium.com/@psalomone33/specialize-or-hybridize-your-true-value-always-surfaces-3c3ef8eff7cb', '_blank')">
-            <div class="blog-date">2025-10-07</div>
-            <div class="blog-content">
-              <h3 class="blog-title">Specialize or Hybridize: Your True Value Always Surfaces</h3>
-              <p class="blog-summary">A deep dive into career strategy and finding your niche.</p>
-              <div class="blog-tags">
-                <span class="tag">[CAREER]</span> <span class="tag">[TECH]</span>
-              </div>
-            </div>
-            <div class="blog-action">&gt; EXECUTE</div>
+          <div class="blog-entry-data"
+            data-url="https://medium.com/@psalomone33/specialize-or-hybridize-your-true-value-always-surfaces-3c3ef8eff7cb"
+            data-date="2025-10-07" data-tags="[CAREER], [TECH]">
+            <h3>Specialize or Hybridize: Your True Value Always Surfaces</h3>
+            <p>A deep dive into career strategy and finding your niche.</p>
           </div>
 
           <!-- Blog Entry 3 -->
-          <div class="blog-entry"
-            onclick="window.open('https://medium.com/@psalomone33/vibe-coding-ai-trap-or-cognitive-snap-9ccfb9ceb5d1', '_blank')">
-            <div class="blog-date">2025-08-17</div>
-            <div class="blog-content">
-              <h3 class="blog-title">Vibe Coding : AI Trap Or Cognitive Snap?</h3>
-              <p class="blog-summary">Is AI coding a cognitive snap or a dangerous trap? Exploring the nuance.</p>
-              <div class="blog-tags">
-                <span class="tag">[AI]</span> <span class="tag">[CODING]</span>
-              </div>
-            </div>
-            <div class="blog-action">&gt; EXECUTE</div>
+          <div class="blog-entry-data"
+            data-url="https://medium.com/@psalomone33/vibe-coding-ai-trap-or-cognitive-snap-9ccfb9ceb5d1"
+            data-date="2025-08-17" data-tags="[AI], [CODING]">
+            <h3>Vibe Coding : AI Trap Or Cognitive Snap?</h3>
+            <p>Is AI coding a cognitive snap or a dangerous trap? Exploring the nuance.</p>
           </div>
 
           <!-- Blog Entry 4 -->
-          <div class="blog-entry" onclick="window.open('https://medium.com/p/9770d6886539', '_blank')">
-            <div class="blog-date">2024-12-28</div>
-            <div class="blog-content">
-              <h3 class="blog-title">Draft Like a Data Wizard: How Recommender Systems Can Dominate Your Fantasy
-                Basketball
-                League</h3>
-              <p class="blog-summary">Applying data science and recommender systems to fantasy sports.</p>
-              <div class="blog-tags">
-                <span class="tag">[DATA]</span> <span class="tag">[SPORTS]</span>
-              </div>
-            </div>
-            <div class="blog-action">&gt; EXECUTE</div>
+          <div class="blog-entry-data" data-url="https://medium.com/p/9770d6886539" data-date="2024-12-28"
+            data-tags="[DATA], [SPORTS]">
+            <h3>Draft Like a Data Wizard: How Recommender Systems Can Dominate Your Fantasy Basketball League</h3>
+            <p>Applying data science and recommender systems to fantasy sports.</p>
           </div>
 
           <!-- Blog Entry 5 -->
-          <div class="blog-entry"
-            onclick="window.open('https://medium.com/@psalomone33/why-i-traded-my-pajamas-for-a-commute-sometimes-75181f532ec6', '_blank')">
-            <div class="blog-date">2024-11-15</div>
-            <div class="blog-content">
-              <h3 class="blog-title">Why I Traded My Pajamas for a Commute (Sometimes)</h3>
-              <p class="blog-summary">The hybrid work debate and the value of in-person collaboration.</p>
-              <div class="blog-tags">
-                <span class="tag">[LIFESTYLE]</span> <span class="tag">[WORK]</span>
-              </div>
-            </div>
-            <div class="blog-action">&gt; EXECUTE</div>
+          <div class="blog-entry-data"
+            data-url="https://medium.com/@psalomone33/why-i-traded-my-pajamas-for-a-commute-sometimes-75181f532ec6"
+            data-date="2024-11-15" data-tags="[LIFESTYLE], [WORK]">
+            <h3>Why I Traded My Pajamas for a Commute (Sometimes)</h3>
+            <p>The hybrid work debate and the value of in-person collaboration.</p>
           </div>
 
           <!-- Blog Entry 6 -->
-          <div class="blog-entry" onclick="window.open('https://medium.com/p/3f8e7bc5c598', '_blank')">
-            <div class="blog-date">2024-09-23</div>
-            <div class="blog-content">
-              <h3 class="blog-title">Could You Be Next? What Leads to School Dropouts</h3>
-              <p class="blog-summary">An analysis of educational data and risk factors.</p>
-              <div class="blog-tags">
-                <span class="tag">[EDUCATION]</span> <span class="tag">[ANALYSIS]</span>
-              </div>
-            </div>
-            <div class="blog-action">&gt; EXECUTE</div>
+          <div class="blog-entry-data" data-url="https://medium.com/p/3f8e7bc5c598" data-date="2024-09-23"
+            data-tags="[EDUCATION], [ANALYSIS]">
+            <h3>Could You Be Next? What Leads to School Dropouts</h3>
+            <p>An analysis of educational data and risk factors.</p>
           </div>
         </div>
         <div id="medium-pagination-controls"></div>

@@ -1,13 +1,5 @@
 console.log('script.js loaded successfully!');
 
-// --- Profanity list & function ---
-const PROFANITY_LIST = ["badword1", "badword2", "badword3"];
-
-function containsProfanity(text) {
-  const lower = text.toLowerCase();
-  return PROFANITY_LIST.some(word => lower.includes(word));
-}
-
 // --- Clock updater ---
 function updateClocks() {
   const now = new Date();
@@ -226,7 +218,6 @@ async function sendChat() {
 
   if (!message) return;
   if (message.length > 150) { alert("Your message is too long. Please keep it under 150 characters."); return; }
-  if (containsProfanity(message)) { alert("Your message contains inappropriate language."); return; }
 
   // Ensure session is initialized
   await initConversationSession();
@@ -630,13 +621,247 @@ function setupPagination(listId, controlsId, itemsPerPage = 3) {
   }
 }
 
-// Initialize pagination for both sections
-function initPaginations() {
-  setupPagination('project-list', 'pagination-controls', 3);
-  setupPagination('medium-list', 'medium-pagination-controls', 3);
+// --- Digital Journal (Logbook) Logic ---
+class JournalBook {
+  constructor(containerId, dataSourceId) {
+    this.container = document.getElementById(containerId);
+    this.dataSource = document.getElementById(dataSourceId);
+    if (!this.container || !this.dataSource) return;
+
+    this.entries = Array.from(this.dataSource.children);
+    this.pages = [];
+    this.currentPage = 0; // 0 = closed book cover? Or page index? Let's say index of displayed sheet.
+
+    this.init();
+  }
+
+  init() {
+    this.container.innerHTML = ''; // Clear container
+
+    // Distribute entries onto sheets.
+    // Single View: 1 Entry = 1 Sheet.
+    // Content on Front. Back is decorative.
+
+    const totalSheets = this.entries.length;
+
+    for (let i = 0; i < totalSheets; i++) {
+      const sheet = document.createElement('div');
+      sheet.classList.add('journal-sheet');
+      sheet.style.zIndex = totalSheets - i; // Stack order: First sheet on top
+
+      // Front Face - Contains Content
+      const front = document.createElement('div');
+      front.classList.add('page-side', 'page-front');
+      const entry = this.entries[i];
+      front.appendChild(this.createPageContent(entry, i + 1));
+
+      // Back Face - Decorative / Empty
+      const back = document.createElement('div');
+      back.classList.add('page-side', 'page-back');
+
+      // Add decorative elements to back (e.g., logo or "Classified")
+      back.innerHTML = '';
+
+      sheet.appendChild(front);
+      sheet.appendChild(back);
+      this.container.appendChild(sheet);
+      this.pages.push(sheet);
+
+      // Click event to flip
+      sheet.addEventListener('click', () => {
+        this.handleFlip(i);
+      });
+    }
+
+    // --- Create "End of Log" Sheet ---
+    const finalSheet = document.createElement('div');
+    finalSheet.classList.add('journal-sheet');
+    finalSheet.style.zIndex = 0; // Stack order: Bottom
+
+    // Front Face - End Message
+    const finalFront = document.createElement('div');
+    finalFront.classList.add('page-side', 'page-front');
+
+    finalFront.innerHTML = `
+        <div class="page-content" style="align-items: center; justify-content: center; text-align: center;">
+            <div style="font-size: 3rem; margin-bottom: 2rem; opacity: 0.8;">🏁</div>
+            <h3 style="font-size: 1.5rem; letter-spacing: 2px; margin-bottom: 3rem; text-transform: uppercase;">End of Transmission</h3>
+            <p style="opacity: 0.6; margin-bottom: 3rem;">You have reached the end of the logs.</p>
+            <button id="journal-reset-btn" style="background: #e0e0e0; color: #121212; border: none; padding: 15px 30px; font-family: inherit; font-weight: bold; font-size: 1rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 0 15px rgba(224,224,224,0.2);">↩ RETURN TO START</button>
+        </div>
+        <div class="page-number">END</div>
+    `;
+
+    // Reset Button Logic
+    const resetBtn = finalFront.querySelector('#journal-reset-btn');
+    resetBtn.addEventListener('click', (e) => {
+      e.stopPropagation(); // Prevent flip
+      this.reset();
+    });
+
+    // Back Face - Decorative
+    const finalBack = document.createElement('div');
+    finalBack.classList.add('page-side', 'page-back');
+    finalBack.innerHTML = '';
+
+    finalSheet.appendChild(finalFront);
+    finalSheet.appendChild(finalBack);
+    this.container.appendChild(finalSheet);
+    this.pages.push(finalSheet);
+
+    // Allow flipping the final page too? Yes, to see the back.
+    finalSheet.addEventListener('click', () => {
+      this.handleFlip(totalSheets); // Index of final sheet is totalSheets (since i goes 0 to totalSheets-1)
+    });
+
+    console.log(`Journal initialized with ${totalSheets + 1} sheets (Single View + End).`);
+  }
+
+  reset() {
+    this.pages.forEach((sheet, index) => {
+      sheet.classList.remove('flipped');
+      // Restore Z-Index: 
+      // 0th item (first page) had highest Z.
+      // Last item (end page) had lowest Z (0).
+      // We can just reverse the index logic from creation.
+      // Creation: zIndex = totalSheets - i (where totalSheets was count of entries)
+      // Actually, let's just make it simpler:
+      // Top page = max index. Bottom = 0.
+      // Wait, stacked means Top page has Highest Z.
+      // So Page 0 has Z = N. Page N has Z = 0.
+      sheet.style.zIndex = (this.pages.length - 1) - index;
+    });
+    console.log('Journal reset.');
+  }
+
+  bindControls(prevBtnId, nextBtnId) {
+    const prevBtn = document.getElementById(prevBtnId);
+    const nextBtn = document.getElementById(nextBtnId);
+
+    if (prevBtn) prevBtn.addEventListener('click', () => this.flipPrev());
+    if (nextBtn) nextBtn.addEventListener('click', () => this.flipNext());
+  }
+
+  flipNext() {
+    // Find the first unflipped sheet and flip it
+    // Sheets are sorted: 0 is bottom, length-1 is top? No.
+    // JS creation: sheet.style.zIndex = totalSheets - i; (First sheet i=0 has highest zIndex)
+    // So i=0 is top. i=0 is first page.
+
+    // We look for the first sheet that is NOT flipped.
+    const sheetToFlip = this.pages.find(p => !p.classList.contains('flipped'));
+
+    if (sheetToFlip) {
+      // Flip it "left" (add flipped class)
+      // sheetToFlip is the top-most unflipped page.
+      sheetToFlip.classList.add('flipped');
+      const index = this.pages.indexOf(sheetToFlip);
+      sheetToFlip.style.zIndex = 100 + index; // Move to top of left pile
+    }
+  }
+
+  flipPrev() {
+    // Find the last flipped sheet and unflip it
+    // We look for flipped sheets, then take the last one (highest index).
+    // Or rather, the one on top of the left pile.
+    // Since we flip 0, then 1, then 2... 
+    // The last flipped sheet is the one with highest index among flipped ones.
+
+    // reverse() is destructive, so copy first
+    const flippedSheets = this.pages.filter(p => p.classList.contains('flipped'));
+    const sheetToUnflip = flippedSheets[flippedSheets.length - 1]; // Top of left pile
+
+    if (sheetToUnflip) {
+      sheetToUnflip.classList.remove('flipped');
+      const index = this.pages.indexOf(sheetToUnflip);
+      sheetToUnflip.style.zIndex = this.pages.length - index; // Restore original right-pile Z-index
+    }
+  }
+
+  createPageContent(dataElement, pageNum) {
+    const title = dataElement.querySelector('h3').textContent;
+    const desc = dataElement.querySelector('p').textContent;
+    const url = dataElement.dataset.url;
+    const date = dataElement.dataset.date;
+    const tags = dataElement.dataset.tags || '';
+
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('page-content');
+
+    wrapper.innerHTML = `
+        <div style="border-bottom: 2px solid #333; padding-bottom: 1rem; margin-bottom: 1.5rem;">
+            <div style="font-size: 0.8rem; opacity: 0.6; margin-bottom: 0.5rem;">LOG DATE: ${date}</div>
+            <h3 style="font-size: 1.2rem; margin: 0; line-height: 1.4;">${title}</h3>
+        </div>
+        <div style="flex-grow: 1; overflow-y: auto; font-size: 0.95rem; opacity: 0.9; line-height: 1.6; text-align: justify;">
+            ${desc}
+        </div>
+        <div style="margin-top: 1rem; border-top: 1px dashed #333; padding-top: 1rem;">
+            <div style="font-size: 0.75rem; opacity: 0.6; margin-bottom: 0.5rem;">TAGS: ${tags}</div>
+            <button onclick="window.open('${url}', '_blank')" style="background: transparent; border: 1px solid #e0e0e0; color: #e0e0e0; padding: 5px 10px; cursor: pointer; font-family: inherit; font-size: 0.8rem; width: 100%; transition: all 0.2s;">&gt; ACCESS FULL LOG</button>
+        </div>
+        <div class="page-number">${pageNum}</div>
+      `;
+
+    // Stop propagation on button to prevent flip when clicking button?
+    // Actually, flipping is fine, but let's allow button click.
+    const btn = wrapper.querySelector('button');
+    btn.addEventListener('click', (e) => e.stopPropagation());
+
+    return wrapper;
+  }
+
+  handleFlip(sheetIndex) {
+    const sheet = this.pages[sheetIndex];
+    // If we are flipping this sheet
+    // If it's already flipped, we flip it back?
+    // Or do we strictly move next/prev?
+
+    // Logic:
+    // Clicking a sheet that is NOT flipped => Flip it (next page)
+    // Clicking a sheet that IS flipped => Flip it back? Or flip the previous one?
+
+    // Better Book Logic:
+    // Sheets stack. 
+    // Clicking the RIGHT side (unflipped sheet) -> Flips Left.
+    // Clicking the LEFT side (flipped sheet) -> Flips Right (back to start).
+
+    if (sheet.classList.contains('flipped')) {
+      // If clicking a flipped page, logic says we usually want to turn BACK.
+      // In a binder, clicking the left page (flipped) turns it back to right.
+      // BUT, we must ensure we only turn the TOP-MOST left page.
+      // Is this sheet the top-most left page?
+      // Top-most left page is the one with highest index among flipped pages.
+
+      const flippedSheets = this.pages.filter(p => p.classList.contains('flipped'));
+      const topFlipped = flippedSheets[flippedSheets.length - 1]; // Last one flipped is on top.
+
+      if (sheet === topFlipped) {
+        this.flipPrev();
+      }
+
+    } else {
+      // If clicking an unflipped page (right side). 
+      // We must flip the TOP-MOST right page.
+      // Top-most right page is the one with LOWEST index among unflipped pages.
+      const unflippedSheets = this.pages.filter(p => !p.classList.contains('flipped'));
+      const topUnflipped = unflippedSheets[0]; // First one unflipped is on top.
+
+      if (sheet === topUnflipped) {
+        this.flipNext();
+      }
+    }
+  }
 }
 
-document.addEventListener('DOMContentLoaded', initPaginations);
-// --- Floating Alien Logic Removed ---
-// The alien icon is now fixed in the top right corner via CSS
 
+// Initialize pagination and Journal
+function initApp() {
+  setupPagination('project-list', 'pagination-controls', 3);
+
+  // Init Journal
+  const journal = new JournalBook('journal-book', 'blog-data-source');
+  journal.bindControls('journal-prev', 'journal-next');
+}
+
+document.addEventListener('DOMContentLoaded', initApp);
