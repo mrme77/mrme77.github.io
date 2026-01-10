@@ -19,37 +19,6 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-  <style>
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'IBM Plex Mono', monospace;
-      overflow-x: hidden;
-    }
-
-    .banner-image {
-      width: 100%;
-      max-height: 400px;
-      object-fit: cover;
-      display: block;
-    }
-
-    .tab {
-      box-sizing: border-box;
-      display: none;
-      padding: 0;
-      /* Removed padding */
-    }
-
-    .tab.active {
-      display: block;
-    }
-
-    .tab p {
-      text-align: justify;
-    }
-  </style>
 </head>
 <!-- Chatbot Button -->
 <div id="chatbot-icon" onclick="toggleChat()" title="Chat with AI Agent">
@@ -234,11 +203,11 @@
       <section id="blog" class="tab">
         <div id="journal-container">
           <div id="journal-wrapper">
-            <button id="journal-prev" class="nav-arrow left">&lt;</button>
+            <button id="journal-prev" class="nav-arrow">&lt;</button>
             <div id="journal-book">
               <!-- Pages will be injected by JS -->
             </div>
-            <button id="journal-next" class="nav-arrow right">&gt;</button>
+            <button id="journal-next" class="nav-arrow">&gt;</button>
           </div>
         </div>
         <!-- Hidden Data Source for Blog Entries -->
@@ -291,7 +260,6 @@
             <p>An analysis of educational data and risk factors.</p>
           </div>
         </div>
-        <div id="medium-pagination-controls"></div>
       </section>
 
 
