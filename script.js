@@ -683,11 +683,11 @@ class JournalBook {
     finalFront.classList.add('page-side', 'page-front');
 
     finalFront.innerHTML = `
-        <div class="page-content" style="align-items: center; justify-content: center; text-align: center;">
+        <div class="page-content" style="align-items: center; justify-content: center; text-align: center; color: #2c2416;">
             <div style="font-size: 3rem; margin-bottom: 2rem; opacity: 0.8;">🏁</div>
-            <h3 style="font-size: 1.5rem; letter-spacing: 2px; margin-bottom: 3rem; text-transform: uppercase;">End of Transmission</h3>
-            <p style="opacity: 0.6; margin-bottom: 3rem;">You have reached the end of the logs.</p>
-            <button id="journal-reset-btn" style="background: #e0e0e0; color: #121212; border: none; padding: 15px 30px; font-family: inherit; font-weight: bold; font-size: 1rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 0 15px rgba(224,224,224,0.2);">↩ RETURN TO START</button>
+            <h3 style="font-size: 1.5rem; letter-spacing: 2px; margin-bottom: 3rem; text-transform: uppercase; color: #2c2416;">End of Transmission</h3>
+            <p style="opacity: 0.7; margin-bottom: 3rem; color: #3a3126;">You have reached the end of the logs.</p>
+            <button id="journal-reset-btn" style="background: #8b7355; color: #f5f1e8; border: 2px solid #6b5d4f; padding: 15px 30px; font-family: inherit; font-weight: bold; font-size: 1rem; cursor: pointer; transition: all 0.3s; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">↩ RETURN TO START</button>
         </div>
         <div class="page-number">END</div>
     `;
@@ -789,16 +789,16 @@ class JournalBook {
     wrapper.classList.add('page-content');
 
     wrapper.innerHTML = `
-        <div style="border-bottom: 2px solid #333; padding-bottom: 1rem; margin-bottom: 1.5rem;">
-            <div style="font-size: 0.8rem; opacity: 0.6; margin-bottom: 0.5rem;">LOG DATE: ${date}</div>
-            <h3 style="font-size: 1.2rem; margin: 0; line-height: 1.4;">${title}</h3>
+        <div style="border-bottom: 2px solid #8b7355; padding-bottom: 1rem; margin-bottom: 1.5rem;">
+            <div style="font-size: 0.8rem; color: #6b5d4f; opacity: 0.8; margin-bottom: 0.5rem;">LOG DATE: ${date}</div>
+            <h3 style="font-size: 1.2rem; margin: 0; line-height: 1.4; color: #2c2416;">${title}</h3>
         </div>
-        <div style="flex-grow: 1; overflow-y: auto; font-size: 0.95rem; opacity: 0.9; line-height: 1.6; text-align: justify;">
+        <div style="flex-grow: 1; overflow-y: auto; font-size: 0.95rem; color: #3a3126; line-height: 1.7; text-align: justify;">
             ${desc}
         </div>
-        <div style="margin-top: 1rem; border-top: 1px dashed #333; padding-top: 1rem;">
-            <div style="font-size: 0.75rem; opacity: 0.6; margin-bottom: 0.5rem;">TAGS: ${tags}</div>
-            <button onclick="window.open('${url}', '_blank')" style="background: transparent; border: 1px solid #e0e0e0; color: #e0e0e0; padding: 5px 10px; cursor: pointer; font-family: inherit; font-size: 0.8rem; width: 100%; transition: all 0.2s;">&gt; ACCESS FULL LOG</button>
+        <div style="margin-top: 1rem; border-top: 1px dashed #8b7355; padding-top: 1rem;">
+            <div style="font-size: 0.75rem; color: #6b5d4f; opacity: 0.8; margin-bottom: 0.5rem;">TAGS: ${tags}</div>
+            <button onclick="window.open('${url}', '_blank')" style="background: #8b7355; border: 2px solid #6b5d4f; color: #f5f1e8; padding: 8px 15px; cursor: pointer; font-family: inherit; font-size: 0.85rem; font-weight: bold; width: 100%; transition: all 0.3s; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">&gt; ACCESS FULL LOG</button>
         </div>
         <div class="page-number">${pageNum}</div>
       `;
