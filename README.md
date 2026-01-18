@@ -74,7 +74,7 @@ This site is part portfolio, part playground. It keeps me hands-on with front-en
 ### Typography & Design
 - IBM Plex Mono font for authentic terminal feel
 - Optimized line-height (1.7) for readability
-- Responsive font sizing (15px-19px across devices)
+- Responsive font sizing (14px-18px across devices)
 - Smooth hover effects with glow and underline animations
 
 ---
