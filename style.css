@@ -32,8 +32,8 @@ body {
   font-family: 'IBM Plex Mono', monospace;
   color: #e0e0e0;
   /* Soft White */
-  background-color: #0a0a0a;
-  /* Deeper black for CRT effect */
+  background-color: #121212;
+  /* Consistent dark background */
   background-size: cover;
   position: relative;
   overflow-x: hidden;
@@ -104,10 +104,8 @@ body::after {
 }
 
 .overlay {
-  /* background-color removed for pure black look */
   min-height: 100vh;
   padding: 1rem;
-  /* Reduced from 2rem */
   animation: screenWarmup 0.8s ease-out;
 }
 
@@ -176,11 +174,17 @@ nav ul li a:hover::after {
 
 .tab {
   display: none;
+  background-color: #121212;
+  margin-left: -1rem;
+  margin-right: -1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .tab.active {
   display: block;
   animation: fadeIn 0.4s ease-in;
+  background-color: #121212;
 }
 
 @keyframes fadeIn {
@@ -199,37 +203,40 @@ nav ul li a:hover::after {
 #contact-me {
   position: relative;
   min-height: 100vh;
-  /* Full viewport height */
   padding-top: 2rem;
-  /* Add top padding to reduce scrolling need */
+  padding-bottom: 2rem;
+  background:
+    /* Diagonal lines pattern */
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 35px,
+      rgba(224, 224, 224, 0.02) 35px,
+      rgba(224, 224, 224, 0.02) 70px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 35px,
+      rgba(224, 224, 224, 0.02) 35px,
+      rgba(224, 224, 224, 0.02) 70px
+    ),
+    /* Subtle radial glow from center */
+    radial-gradient(
+      circle at center,
+      rgba(224, 224, 224, 0.03) 0%,
+      transparent 70%
+    ),
+    #121212;
 }
 
 #contact-me.active {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  /* Align to top instead of center */
   align-items: center;
-  /* Center horizontally */
-  background-color: #121212;
   padding-top: 8rem;
-  /* Increased padding to move cards down */
-}
-
-/* Canvas positioning - only show for contact section */
-#contact-me.active #matrix-canvas {
-  display: block;
-}
-
-/* Canvas should be positioned absolutely behind content */
-#matrix-canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  display: none;
+  padding-bottom: 4rem;
 }
 
 /* Blog and Projects section styling */
@@ -238,34 +245,6 @@ nav ul li a:hover::after {
   position: relative;
   min-height: 80vh;
   background-color: #121212;
-}
-
-/* Radial gradient background for blog/journal section */
-#blog {
-  background:
-    /* Subtle grid pattern */
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 49px,
-      rgba(224, 224, 224, 0.03) 49px,
-      rgba(224, 224, 224, 0.03) 50px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 49px,
-      rgba(224, 224, 224, 0.03) 49px,
-      rgba(224, 224, 224, 0.03) 50px
-    ),
-    /* Radial gradient for spotlight effect */
-    radial-gradient(
-      ellipse at center,
-      #2a2a2a 0%,
-      #1a1a1a 40%,
-      #121212 70%,
-      #000000 100%
-    );
 }
 
 /* No centering for blog and projects - just display normally */
@@ -327,7 +306,7 @@ a {
   /* Full viewport width */
   margin: 0 auto 20px auto;
   overflow: hidden;
-  padding: 0 1rem 2rem 1rem;
+  padding: 0 0 2rem 0;
 }
 
 
@@ -345,18 +324,6 @@ a {
   /* Set to 0 if you want edge-to-edge banners */
   background-color: #1e1e1e;
 }
-
-/* Text overlay */
-.banner-content {
-  position: absolute;
-  bottom: 20px;
-  left: 40px;
-  color: #cccccc;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-}
-
-
-/* Font definition for Berkeley Mono */
 
 /* Paragraph alignment and spacing */
 #bio p,
@@ -575,7 +542,7 @@ a {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  background-color: rgba(10, 10, 10, 0.95);
+  background-color: rgba(18, 18, 18, 0.95);
   border: 2px solid #e0e0e0;
   padding: 1.5rem;
   border-radius: 10px;
@@ -656,13 +623,6 @@ a {
     align-items: flex-start;
   }
 
-  /* Banner text smaller + closer to edges */
-  .banner-content {
-    left: 10px;
-    bottom: 10px;
-    font-size: 0.9rem;
-  }
-
   /* Chatbot window should fit smaller screens */
   #chatbot-window {
     width: 90%;
@@ -740,10 +700,9 @@ a {
 }
 
 .retro-card {
-  background-color: #0a0a0a;
+  background-color: #121212;
   border: 2px solid #e0e0e0;
   padding: 1.5rem;
-  /* Reduced padding */
   text-align: center;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -973,7 +932,7 @@ a {
 }
 
 .pagination-btn {
-  background-color: #0a0a0a;
+  background-color: #121212;
   color: #e0e0e0;
   border: 2px solid #e0e0e0;
   padding: 8px 12px;

@@ -36,17 +36,17 @@ function showTab(tabId) {
   const activeCursor = document.getElementById('cursor-' + tabId);
   if (activeCursor) activeCursor.style.display = 'inline-block';
 
-  // Initialize Particle Network ONLY for contact-me section
-  const canvasMap = {
-    'contact-me': 'matrix-canvas'
-  };
+  // Particle Network removed - using CSS background instead
+  // const canvasMap = {
+  //   'contact-me': 'matrix-canvas'
+  // };
 
-  if (canvasMap[tabId] && !particleNetworkInstances[tabId]) {
-    console.log(`Initializing Particle Network for ${tabId}...`);
-    setTimeout(() => {
-      particleNetworkInstances[tabId] = new ParticleNetwork(canvasMap[tabId]);
-    }, 100);
-  }
+  // if (canvasMap[tabId] && !particleNetworkInstances[tabId]) {
+  //   console.log(`Initializing Particle Network for ${tabId}...`);
+  //   setTimeout(() => {
+  //     particleNetworkInstances[tabId] = new ParticleNetwork(canvasMap[tabId]);
+  //   }, 100);
+  // }
 }
 
 
