@@ -12,7 +12,7 @@ box-sizing: border-box;
 }
 body {
 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+background: linear-gradient(135deg, #a8b1e0 0%, #c4a8cf 100%);
 min-height: 100vh;
 display: flex;
 align-items: center;
@@ -56,7 +56,13 @@ transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 a:hover {
 transform: translateY(-2px);
-box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+box-shadow: 0 10px 20px rgba(168, 177, 224, 0.5);
+}
+.buttons {
+display: flex;
+flex-direction: column;
+gap: 15px;
+align-items: center;
 }
 </style>
 </head>
@@ -64,8 +70,11 @@ box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
 <div class="container">
 <h1>404</h1>
 <h2>Page Not Found</h2>
-<p>This website was published for educational purposes and is no longer available. If you want to learn more about the developer, please visit:</p>
+<p>This website was published for educational purposes and is no longer available. If you want to learn more about the developer or view the project source code, please visit:</p>
+<div class="buttons">
 <a href="https://www.pasqualesalomone.com">www.pasqualesalomone.com</a>
+<a href="https://github.com/mrme77/Personal-Goals-Assistant">View on GitHub</a>
+</div>
 </div>
 </body>
 </html>
